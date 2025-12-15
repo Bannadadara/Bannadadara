@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/bannadadara/',   // MUST match repo name
+  base: '/Bannadadara/',   // MUST match repo name
 })
