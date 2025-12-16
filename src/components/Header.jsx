@@ -1,25 +1,24 @@
-import { ShoppingCart } from 'lucide-react';
-
-export default function Header({ setPage, setShowCart }) {
+export default function Header() {
   return (
-    <header className="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-4 sticky top-0 z-50">
-      <div className="container mx-auto flex justify-between items-center">
-        <h1
-          className="text-2xl font-bold cursor-pointer"
-          onClick={() => setPage('home')}
-        >
-          🌈 Bannada Daara
-        </h1>
-        <nav className="flex gap-6">
-          <button onClick={() => setPage('home')}>Home</button>
-          <button onClick={() => setPage('shop')}>Shop</button>
-          <button onClick={() => setPage('about')}>About</button>
-          <button onClick={() => setPage('contact')}>Contact</button>
-          <button onClick={() => setShowCart(true)}>
-            <ShoppingCart />
-          </button>
-        </nav>
+    <header style={{ padding: "16px", display: "flex", justifyContent: "space-between" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <img src="/logo.png" alt="Logo" height="40" />
+        <strong>Bannada Daara</strong>
       </div>
+
+      <a
+        href="https://wa.me/918105750221"
+        target="_blank"
+        style={{
+          background: "green",
+          color: "white",
+          padding: "8px 12px",
+          textDecoration: "none",
+          borderRadius: "5px"
+        }}
+      >
+        Order on WhatsApp
+      </a>
     </header>
   );
 }
