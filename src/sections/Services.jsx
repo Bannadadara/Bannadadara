@@ -1,11 +1,11 @@
 export default function Services() {
   return (
-    <section style={{ padding: "20px", background: "#f2f2f2" }}>
+    <section id="services" className="section-alt">
       <h2>Our Services</h2>
-      <ul>
-        <li>Online shop via Instagram</li>
-        <li>Pop-up stalls across Karnataka</li>
-        <li>Capacity building & workshops</li>
+      <ul className="services-list">
+        <li>Online shop via Instagram - Browse our latest collections</li>
+        <li>Pop-up stalls across Karnataka - Meet us in person</li>
+        <li>Capacity building & workshops - Learn sustainable crafting</li>
       </ul>
     </section>
   );

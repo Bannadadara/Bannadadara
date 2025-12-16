@@ -2,23 +2,35 @@ import products from "../data/products";
 
 export default function Products() {
   return (
-    <section style={{ padding: "20px" }}>
-      <h2>Products</h2>
+    <section id="products">
+      <h2>Our Products</h2>
+      <p style={{ textAlign: 'center', marginBottom: '2rem', color: '#666' }}>
+        Explore our handcrafted collection of eco-friendly products
+      </p>
 
-      {products.map(p => (
-        <div key={p.id} style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}>
-          <strong>{p.name}</strong>
-          <p>{p.category}</p>
-          <p>{typeof p.price === "number" ? `₹${p.price}` : p.price}</p>
+      <div className="products-grid">
+        {products.map((product) => (
+          <div key={product.id} className="product-card">
+            <h3 className="product-name">{product.name}</h3>
+            <p className="product-category">{product.category}</p>
+            <p className="product-price">
+              {typeof product.price === "number" 
+                ? `₹${product.price}` 
+                : product.price}
+            </p>
 
-          <a
-            href={`https://wa.me/918105750221?text=I%20want%20to%20order%20${encodeURIComponent(p.name)}`}
-            target="_blank"
-          >
-            Order on WhatsApp
-          </a>
-        </div>
-      ))}
+            <a
+              href={`https://wa.me/918105750221?text=Hi! I'm interested in ordering ${encodeURIComponent(product.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="product-order-btn"
+              aria-label={`Order ${product.name} on WhatsApp`}
+            >
+              💬 Order on WhatsApp
+            </a>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

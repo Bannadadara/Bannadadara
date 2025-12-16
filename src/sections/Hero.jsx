@@ -1,8 +1,10 @@
 export default function Hero() {
   return (
-    <section style={{ textAlign: "center", padding: "40px" }}>
-      <h1>Adding color to your life</h1>
-      <p>Eco-friendly • Hand-made • Made-to-order</p>
+    <section className="hero">
+      <h1>Adding Color to Your Life</h1>
+      <p className="hero-subtitle">
+        <span>Eco-friendly</span> • <span>Hand-made</span> • <span>Made-to-order</span>
+      </p>
     </section>
   );
 }
