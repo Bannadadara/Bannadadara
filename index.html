@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Bannada Daara | Adding color to your life</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
@@ -11,7 +11,7 @@
     <header>
         <div class="container nav-bar">
             <div class="logo-area">
-                <img src="images/logo.png" alt="Bannada Daara Logo" class="logo-img">
+                <img src="images/logo.png" alt="Bannada Daara" class="logo-img">
                 <span class="brand-name">Bannada Daara</span>
             </div>
             <nav>
@@ -27,20 +27,16 @@
     <div id="cart-sidebar" class="cart-sidebar">
         <div class="cart-header">
             <h3>Your Selection</h3>
-            <button id="close-cart">&times;</button>
+            <button id="close-cart" class="close-btn">&times;</button>
         </div>
         <div id="cart-items"></div>
         <div class="cart-footer">
             <p>Total: <span id="cart-total">Rs. 0</span></p>
-            <button id="checkout-btn" class="btn">Message to Order</button>
+            <button id="checkout-btn" class="btn checkout-btn">Message to Order</button>
         </div>
     </div>
 
-    <section class="hero">
-        <h1>Adding color to your life</h1>
-        <p>Eco-friendly • Hand-made • Consciously-made</p>
-        <a href="#products" class="btn">View Catalogue</a>
-    </section>
+    <section class="hero"></section>
 
     <section id="about" class="container">
         <h2>Who we are & what we do</h2>
@@ -48,26 +44,25 @@
     </section>
 
     <section id="products" class="container">
-        <h2>Our Products</h2>
+        <h2>Our Catalogue</h2>
         <div class="product-grid" id="product-list"></div>
     </section>
 
     <footer id="contact">
         <div class="container footer-content">
             <div class="contact-info">
-                <h2>Place Your Order</h2>
-                <p>Call/WhatsApp: <strong>81057 50221</strong></p>
+                <h2>Contact Us</h2>
+                <p>WhatsApp: <strong>81057 50221</strong></p>
                 <p>Instagram: <a href="https://instagram.com/bannada_daara_21" target="_blank">@bannada_daara_21</a></p>
-                <p>Email: lavanyajyothigudde@gmail.com</p>
             </div>
 
             <div class="feedback-section">
-                <h3>Share Your Thoughts</h3>
-                <p>We value your feedback! Click below to chat with us on WhatsApp.</p>
-                <button id="send-feedback-btn" class="btn">Send Feedback via WhatsApp</button>
+                <h3>Feedback</h3>
+                <p>We value your thoughts! Click below to chat with us on WhatsApp.</p>
+                <button id="send-feedback-btn" class="btn feedback-btn">Send Feedback via WhatsApp</button>
             </div>
         </div>
-        <p class="disclaimer">Note: Since every batch of textile waste is different, designs may vary from the catalogue[cite: 15].</p>
+        <p class="disclaimer">Note: Since every batch of textile waste is different, designs may vary from images. Every piece is unique.</p>
     </footer>
 </body>
 </html>
