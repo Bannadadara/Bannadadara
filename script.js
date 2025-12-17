@@ -1,5 +1,5 @@
 const products = [
-    // BAGS [cite: 5, 8]
+    // BAGS
     { id: 1, name: "Reversible Tote Bag", price: 500, category: "Bags", img: "images/tote-rev.jpg" },
     { id: 2, name: "Box Tote (Plain)", price: 350, category: "Bags", img: "images/tote-plain.jpg" },
     { id: 3, name: "Box Tote (Patch-work)", price: 500, category: "Bags", img: "images/tote-patch.jpg" },
@@ -12,7 +12,7 @@ const products = [
     { id: 10, name: "Potli", price: 250, category: "Bags", img: "images/potli.jpg" },
     { id: 11, name: "Foldable Grocery Bag", price: 250, category: "Bags", img: "images/grocery.jpg" },
 
-    // POUCHES [cite: 9, 10]
+    // POUCHES
     { id: 12, name: "U-Shape Pouch (S)", price: 100, category: "Pouches", img: "images/u-pouch.jpg" },
     { id: 13, name: "Travel Kit", price: 170, category: "Pouches", img: "images/travel.jpg" },
     { id: 14, name: "Pad-Holder", price: 100, category: "Pouches", img: "images/pad-holder.jpg" },
@@ -20,12 +20,12 @@ const products = [
     { id: 16, name: "Box Pouch", price: 170, category: "Pouches", img: "images/box-pouch.jpg" },
     { id: 17, name: "Trinket", price: 40, category: "Pouches", img: "images/trinket.jpg" },
 
-    // STATIONERY [cite: 11, 12]
+    // STATIONERY
     { id: 18, name: "A4 Files", price: 200, category: "Stationery", img: "images/files.jpg" },
     { id: 19, name: "Pen Pouch", price: 100, category: "Stationery", img: "images/pen-pouch.jpg" },
     { id: 20, name: "Book (Embroidered Cover)", price: 450, category: "Stationery", img: "images/book.jpg" },
 
-    // ACCESSORIES & DECOR [cite: 12, 13]
+    // ACCESSORIES & DECOR
     { id: 21, name: "Cutlery Kit", price: 260, category: "Accessories", img: "images/cutlery.jpg" },
     { id: 22, name: "Mask", price: 50, category: "Accessories", img: "images/mask.jpg" },
     { id: 23, name: "Patch-work Quilt", price: 0, category: "Decor", img: "images/quilt.jpg", on_request: true },
@@ -34,68 +34,70 @@ const products = [
 
 let cart = [];
 
-function initSite() {
+function init() {
     const list = document.getElementById('product-list');
     if (!list) return;
 
-    // Render Products from Catalogue
     list.innerHTML = products.map(p => `
         <div class="card">
-            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Bannada+Daara'">
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
             <div class="card-info">
                 <span class="tag">${p.category}</span>
                 <h3>${p.name}</h3>
                 <p class="price">${p.on_request ? "Price on Request" : "Rs. " + p.price + "/-"}</p>
-                <button class="cart-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+                <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
             </div>
         </div>
     `).join('');
 
-    // Cart Navigation
-    document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
-    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
+    // Cart Sidebar Logic
+    const sidebar = document.getElementById('cart-sidebar');
+    document.getElementById('cart-toggle').onclick = () => sidebar.classList.add('open');
+    document.getElementById('close-cart').onclick = () => sidebar.classList.remove('open');
 
-    // Feedback Button Handler
-    document.getElementById('send-feedback-btn').onclick = function() {
-        window.open(`https://wa.me/918105750221?text=${encodeURIComponent("Hi Lavanya, I would like to share some feedback regarding Bannada Daara:")}`, '_blank');
+    // Feedback Button
+    document.getElementById('send-feedback-btn').onclick = () => {
+        window.open(`https://wa.me/918105750221?text=${encodeURIComponent("Hi Lavanya, I'd like to share feedback about Bannada Daara:")}`, '_blank');
     };
 }
 
 window.addToCart = (id) => {
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    updateCart();
+    const item = products.find(p => p.id === id);
+    cart.push(item);
+    renderCart();
     document.getElementById('cart-sidebar').classList.add('open');
 };
 
-window.removeItem = (index) => {
+window.removeFromCart = (index) => {
     cart.splice(index, 1);
-    updateCart();
+    renderCart();
 };
 
-function updateCart() {
+function renderCart() {
+    const cartItems = document.getElementById('cart-items');
     document.getElementById('cart-toggle').innerText = `Cart (${cart.length})`;
-    document.getElementById('cart-items').innerHTML = cart.map((item, i) => `
+    
+    cartItems.innerHTML = cart.map((item, index) => `
         <div class="cart-item">
             <span>${item.name}</span>
-            <button class="remove-btn" onclick="removeItem(${i})">&times;</button>
+            <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
         </div>
     `).join('');
-    const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
+
+    const total = cart.reduce((acc, curr) => acc + (curr.price || 0), 0);
     document.getElementById('cart-total').innerText = `Rs. ${total}`;
 }
 
-// Checkout Button logic
 document.getElementById('checkout-btn').onclick = () => {
-    if(cart.length === 0) return alert("Your cart is empty!");
+    if (cart.length === 0) return alert("Please add items to cart first.");
     const names = cart.map(i => i.name).join(", ");
-    const msg = encodeURIComponent(`Hi, I'd like to order: ${names}. Total: Rs. ${document.getElementById('cart-total').innerText}`);
-    window.open(`https://wa.me/918105750221?text=${msg}`);
+    const text = `Hi Lavanya! I'd like to order: ${names}. Total Estimate: Rs. ${document.getElementById('cart-total').innerText}`;
+    window.open(`https://wa.me/918105750221?text=${encodeURIComponent(text)}`, '_blank');
 };
 
-// Start script logic
+// Fail-safe init
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSite);
+    document.addEventListener('DOMContentLoaded', init);
 } else {
-    initSite();
+    init();
 }
