@@ -1,44 +1,48 @@
-:root { 
-    --primary: #2e7d32; 
-    --text: #333; 
-    --white: #ffffff;
-    --dark-footer: #1a1a1a;
-    --bg-light: #f9faf9;
+:root {
+    --amazon-blue: #232f3e;
+    --amazon-orange: #febd69;
+    --amazon-yellow: #f0c14b;
+    --bg-gray: #eaeded;
+    --text: #111;
 }
 
-body { font-family: 'Inter', sans-serif; margin: 0; color: var(--text); background: var(--bg-light); line-height: 1.6; }
-.container { width: 92%; max-width: 1100px; margin: auto; padding: 20px 0; }
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg-gray); margin: 0; color: var(--text); }
+.container { max-width: 1240px; margin: auto; width: 95%; }
 
-/* Interactive Sidebar Window */
-.cart-sidebar { 
-    position: fixed; top: 0; right: -100%; width: 400px; height: 100%; 
-    background: white; box-shadow: -10px 0 30px rgba(0,0,0,0.1); 
-    z-index: 2000; transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
-    display: flex; flex-direction: column; 
-}
-.cart-sidebar.open { right: 0; }
-.cart-header { padding: 25px; background: var(--primary); color: white; display: flex; justify-content: space-between; align-items: center; }
-.cart-body { flex: 1; overflow-y: auto; padding: 20px; }
-.cart-footer { padding: 25px; border-top: 1px solid #eee; background: #fff; }
-.total-row { display: flex; justify-content: space-between; font-size: 1.2rem; margin-bottom: 15px; }
+/* Professional Header */
+.main-header { background: #131921; color: white; padding: 10px 0; }
+.header-content { display: flex; align-items: center; gap: 20px; }
+.logo-section { display: flex; align-items: center; min-width: 180px; }
+.logo { height: 40px; border-radius: 50%; }
+.brand { font-weight: bold; margin-left: 10px; font-size: 1.2rem; color: var(--amazon-orange); }
 
-/* Renamed My Shopping Bag Button */
-.cart-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-.cart-btn:hover { background: #1b5e20; transform: translateY(-2px); }
+.search-container { flex: 1; display: flex; }
+.search-container input { flex: 1; padding: 12px; border: none; border-radius: 4px 0 0 4px; outline: none; }
+.search-btn { background: var(--amazon-orange); border: none; padding: 10px 20px; border-radius: 0 4px 4px 0; cursor: pointer; }
 
-/* Products */
-.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
-.card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.3s; text-align: center; }
-.card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
-.card img { width: 100%; height: 230px; object-fit: cover; }
+.nav-links { display: flex; align-items: center; gap: 20px; }
+.cart-trigger { background: transparent; border: 1px solid white; color: white; padding: 8px 12px; border-radius: 3px; cursor: pointer; display: flex; align-items: center; gap: 8px; position: relative; }
+.badge { background: var(--amazon-orange); color: black; border-radius: 50%; padding: 2px 6px; font-size: 0.8rem; position: absolute; top: -8px; right: -8px; }
 
-/* Footer Styling */
-footer { background: var(--dark-footer); color: white; padding: 60px 0 20px; }
-.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; padding-bottom: 30px; border-bottom: 1px solid #333; }
-.insta-link a { color: var(--primary); font-weight: bold; text-decoration: none; border-bottom: 1px solid var(--primary); }
-.footer-bottom { text-align: center; padding-top: 30px; font-size: 0.85rem; }
+/* Product Cards like Flipkart */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+.card { background: white; border: 1px solid #ddd; padding: 15px; transition: 0.2s; cursor: pointer; }
+.card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.card img { width: 100%; height: 200px; object-fit: contain; }
+.card h3 { font-size: 0.95rem; margin: 10px 0 5px; height: 40px; overflow: hidden; }
 
-/* Sidebar Animation */
-.cart-item { display: flex; justify-content: space-between; padding: 12px; background: #fdfdfd; border-radius: 10px; margin-bottom: 10px; border: 1px solid #eee; }
+.pricing { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+.curr-price { font-size: 1.2rem; font-weight: bold; }
+.old-price { text-decoration: line-through; color: #777; font-size: 0.9rem; }
+.add-btn { background: linear-gradient(to bottom, #f7dfa1, #f0c14b); border: 1px solid #a88734; width: 100%; padding: 8px; border-radius: 3px; cursor: pointer; font-weight: 500; }
 
-@media (max-width: 500px) { .cart-sidebar { width: 100%; } }
+/* Interactive Window */
+.cart-window { position: fixed; top: 0; right: -400px; width: 380px; height: 100%; background: white; z-index: 2000; box-shadow: -5px 0 15px rgba(0,0,0,0.2); transition: 0.3s; display: flex; flex-direction: column; }
+.cart-window.open { right: 0; }
+.cart-header { background: var(--amazon-blue); color: white; padding: 20px; display: flex; justify-content: space-between; }
+.buy-now-btn { background: #fb641b; color: white; border: none; width: 100%; padding: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+
+/* Footer */
+.shop-footer { background: #232f3e; color: white; padding: 40px 0; margin-top: 50px; }
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #3a4553; padding-bottom: 20px; }
+.highlight a { color: var(--amazon-orange); font-weight: bold; text-decoration: none; }
