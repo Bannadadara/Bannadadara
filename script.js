@@ -144,7 +144,7 @@ if (confirmOrderBtn) {
         window.open(`https://wa.me/918105750221?text=${encodeURIComponent(orderSummary)}`, '_blank');
 
         // 2. Email Notification (Opens User's Email Client)
-        const mailtoLink = `mailto:lavanya@example.com?subject=New Order Placement&body=${encodeURIComponent(orderSummary)}`;
+        const mailtoLink = `mailto:bannada.dara@gmail.com?subject=New Order Placement&body=${encodeURIComponent(orderSummary)}`;
         window.location.href = mailtoLink;
 
         // 3. UPI Payment Trigger (Works on Mobile)
