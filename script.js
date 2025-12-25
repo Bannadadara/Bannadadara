@@ -8,28 +8,23 @@ function init() {
     setupFeedback();
     setupAnimations();
 
-    // Search Interaction
     document.getElementById('search-bar').addEventListener('input', (e) => {
         renderProducts(document.getElementById('category-filter').value, e.target.value);
     });
 
-    // Category Filter Interaction
     document.getElementById('category-filter').addEventListener('change', (e) => {
         renderProducts(e.target.value, document.getElementById('search-bar').value);
     });
 
-    // Checkout Interaction
     document.getElementById('checkout-btn').onclick = () => {
-        if (cart.length === 0) return alert("Your bag is empty!");
+        if (cart.length === 0) return alert("Your bag is empty.");
         const items = cart.map(i => `- ${i.name} (${i.on_request ? "Price on Request" : "Rs. " + i.price})`).join('\n');
         const total = document.getElementById('cart-total').innerText;
-        const msg = `*Order from Bannada Daara*\n\n*Shopping List:*\n${items}\n\n*Subtotal:* ${total}`;
+        const msg = `*Order from Bannada Daara Boutique*\n\n*Selection:*\n${items}\n\n*Subtotal:* ${total}`;
         
         window.open(`https://wa.me/918105750221?text=${encodeURIComponent(msg)}`, '_blank');
-        
         document.getElementById('thank-you-overlay').style.display = "block";
-        cart = []; 
-        updateUI();
+        cart = []; updateUI();
         document.getElementById('cart-sidebar').classList.remove('open');
     };
 
@@ -49,9 +44,9 @@ function renderProducts(cat = 'All', search = '') {
         <div class="card reveal active">
             <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300'">
             <h4>${p.name}</h4>
-            <p style="color:#B12704; font-weight:bold;">${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
+            <p>${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
             <div class="card-btns">
-                <button class="share-btn" onclick="copyProductLink(${p.id})">🔗</button>
+                <button class="share-btn" onclick="copyProductLink(${p.id})" style="background:none; border:1px solid #eee; cursor:pointer; padding:5px 10px;">🔗</button>
                 <button class="add-btn" onclick="addToCart(${p.id})">Add to Bag</button>
             </div>
         </div>
@@ -76,15 +71,11 @@ window.copyProductLink = (id) => {
 function updateUI() {
     document.getElementById('cart-count').innerText = cart.length;
     document.getElementById('cart-items').innerHTML = cart.map((item, idx) => `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:15px 0; border-bottom:1px solid #f0f0f0;">
-            <div>
-                <div style="font-weight:600;">${item.name}</div>
-                <div style="font-size:0.8rem; color:#666;">${item.on_request ? 'Price on Request' : 'Rs. ' + item.price}</div>
-            </div>
-            <button onclick="window.removeItem(${idx})" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:1.2rem;">&times;</button>
+        <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #f9f9f9;">
+            <span style="font-family:var(--heading-font); font-size:1.1rem;">${item.name}</span>
+            <button onclick="window.removeItem(${idx})" style="color:#ccc; border:none; background:none; cursor:pointer;">&times;</button>
         </div>
     `).join('');
-    
     const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
     document.getElementById('cart-total').innerText = `Rs. ${total}`;
     document.getElementById('request-notice').style.display = cart.some(i => i.on_request) ? 'block' : 'none';
@@ -109,8 +100,8 @@ function setupFeedback() {
     document.getElementById('feedback-btn').onclick = () => m.style.display = "block";
     document.querySelector('.close-modal').onclick = () => m.style.display = "none";
     document.getElementById('submit-feedback-wa').onclick = () => {
-        const txt = document.getElementById('feedback-text').value;
-        if(txt) window.open(`https://wa.me/918105750221?text=${encodeURIComponent("*Feedback:* " + txt)}`, '_blank');
+        const val = document.getElementById('feedback-text').value;
+        if(val) window.open(`https://wa.me/918105750221?text=${encodeURIComponent("*Site Feedback:* " + val)}`, '_blank');
         m.style.display = "none";
     };
 }
