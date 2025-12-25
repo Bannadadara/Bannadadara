@@ -14,7 +14,7 @@
     <header class="navbar">
         <div class="container nav-content">
             <div class="brand">
-                <img src="images/logo.png" alt="Bannada Daara Logo" class="logo">
+                <img src="images/logo.png" alt="Logo" class="logo">
                 <div class="brand-text">
                     <span class="main-title">BANNADA DAARA</span>
                     <span class="sub-title">Handmade & Sustainable</span>
@@ -25,9 +25,7 @@
                 <button class="search-btn">🔍</button>
             </div>
             <div class="nav-links">
-                <button id="cart-toggle" class="bag-btn">
-                    <span class="icon">🛒</span> Bag (<span id="cart-count">0</span>)
-                </button>
+                <button id="cart-toggle" class="bag-btn">🛒 Bag (<span id="cart-count">0</span>)</button>
             </div>
         </div>
     </header>
@@ -40,19 +38,10 @@
         <div id="cart-items" class="sidebar-body"></div>
         <div class="sidebar-footer">
             <div class="total-row">Subtotal: <span id="cart-total">Rs. 0</span></div>
-            <p id="request-notice" class="request-notice" style="display:none;">* Custom items require price confirmation via chat.</p>
+            <p id="request-notice" class="request-notice" style="display:none;">* Custom items require price confirmation via WhatsApp.</p>
             <button id="checkout-btn" class="checkout-btn">Proceed to WhatsApp</button>
         </div>
     </div>
-
-    <section class="hero">
-        <div class="hero-overlay">
-            <span class="badge-tag">Sustainable Fashion</span>
-            <h1>Artistry in Every Stitch</h1>
-            <p>Elegantly Upcycled Treasures Handcrafted for You</p>
-            <a href="#products" class="cta-prime">Explore Collection</a>
-        </div>
-    </section>
 
     <section id="about" class="about">
         <div class="container">
@@ -60,9 +49,10 @@
                 <div class="eco-badge">ESTABLISHED 2020</div>
                 <h2 class="about-title">Conscious Artistry</h2>
                 <p class="about-description">
-                    Founded by <strong>Lavanya</strong>, we breathe new life into textile excesses. 
-                    Every piece is unique, hand-stitched with love in Dakshina Kannada, 
-                    ensuring that sustainability meets luxury.
+                    Founded by <strong>Lavanya</strong>, Bannada Daara is a celebration of circular fashion. 
+                    We breathe new life into textile excesses, meticulously upcycling fabric remnants 
+                    into premium handcrafted goods. Every stitch is a commitment to reducing landfill waste 
+                    and honoring the timeless tradition of Indian craftsmanship.
                 </p>
                 <div class="icon-line">
                     <div class="icon-item"><span>🌱</span> ECO-FRIENDLY</div>
@@ -88,25 +78,24 @@
         <div class="product-grid" id="product-list"></div>
     </main>
 
-    <a href="https://wa.me/918105750221" class="whatsapp-float" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-    </a>
-
-    <div id="feedback-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3 class="heading-serif">We Value Your Thoughts</h3>
-            <textarea id="feedback-text" placeholder="Share your experience..."></textarea>
-            <button id="submit-feedback-wa" class="checkout-btn">Send Message</button>
+    <section class="instagram-section reveal">
+        <div class="container">
+            <h2 class="boutique-heading" style="text-align: center;">Follow Our Journey</h2>
+            <p style="text-align: center; font-family: 'Montserrat'; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 30px; color: #c5a059;">@bannada_daara_</p>
+            <div class="insta-grid">
+                <div class="insta-item"><img src="images/insta1.jpg" alt="Crafting Process"></div>
+                <div class="insta-item"><img src="images/insta2.jpg" alt="Fabric Textures"></div>
+                <div class="insta-item"><img src="images/insta3.jpg" alt="Finished Product"></div>
+                <div class="insta-item"><img src="images/insta4.jpg" alt="Eco Packaging"></div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <div id="thank-you-overlay" class="modal">
-        <div class="modal-content success-card">
-            <div class="success-icon">✨</div>
-            <h2 class="heading-serif">Thank You</h2>
-            <p>Your shopping list is prepared. Please send the message on WhatsApp to finalize your purchase.</p>
-            <button id="close-success" class="cta-prime">Back to Boutique</button>
+        <div class="modal-content">
+            <h2 class="boutique-heading">Order Initiated</h2>
+            <p>Your shopping list is ready. Please send the message on WhatsApp to finalize your purchase.</p>
+            <button id="close-success" class="checkout-btn">Back to Boutique</button>
         </div>
     </div>
 
@@ -114,7 +103,8 @@
         <div class="container footer-grid">
             <div class="footer-info">
                 <p class="footer-brand">BANNADA DAARA</p>
-                <p>Curated Handcrafts | +91 81057 50221</p>
+                <p>Curated Upcycled Handcrafts | Dakshina Kannada</p>
+                <p>Contact: +91 81057 50221</p>
             </div>
             <button id="feedback-btn" class="feedback-btn">Give Feedback</button>
         </div>
