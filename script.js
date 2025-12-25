@@ -7,23 +7,29 @@ function init() {
     setupCart();
     setupAnimations();
 
-    document.getElementById('search-bar').addEventListener('input', (e) => {
-        renderProducts(document.getElementById('category-filter').value, e.target.value);
+    const searchBar = document.getElementById('search-bar');
+    const categoryFilter = document.getElementById('category-filter');
+
+    // Event Listeners
+    searchBar.addEventListener('input', (e) => {
+        renderProducts(categoryFilter.value, e.target.value);
     });
 
-    document.getElementById('category-filter').addEventListener('change', (e) => {
-        renderProducts(e.target.value, document.getElementById('search-bar').value);
+    categoryFilter.addEventListener('change', (e) => {
+        renderProducts(e.target.value, searchBar.value);
     });
 
+    // Checkout Implementation
     document.getElementById('checkout-btn').onclick = () => {
         if (cart.length === 0) return alert("Your bag is empty.");
         const items = cart.map(i => `- ${i.name} (${i.on_request ? "Price on Request" : "Rs. " + i.price})`).join('\n');
         const total = document.getElementById('cart-total').innerText;
-        const msg = `*Order from Bannada Daara*\n\n*Selection:*\n${items}\n\n*Subtotal:* ${total}`;
+        const msg = `*Order from Bannada Daara*\n\n*Selection:*\n${items}\n\n*Total:* ${total}`;
         
         window.open(`https://wa.me/918105750221?text=${encodeURIComponent(msg)}`, '_blank');
         document.getElementById('thank-you-overlay').style.display = "block";
-        cart = []; updateUI();
+        cart = []; 
+        updateUI();
         document.getElementById('cart-sidebar').classList.remove('open');
     };
 
@@ -46,32 +52,43 @@ function renderProducts(cat = 'All', search = '') {
             <p>${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
             <div class="card-btns">
                 <a href="${p.img}" target="_blank" class="view-btn">VIEW</a>
-                <button class="add-btn" onclick="addToCart(${p.id})">ADD TO BAG</button>
+                <button class="add-btn" data-id="${p.id}">ADD TO BAG</button>
             </div>
         </div>
     `).join('');
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+        btn.onclick = () => addToCart(parseInt(btn.dataset.id));
+    });
 }
 
-window.addToCart = (id) => {
-    cart.push(products.find(p => p.id === id));
+function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    cart.push(product);
     updateUI();
     document.getElementById('cart-sidebar').classList.add('open');
-};
+}
 
 function updateUI() {
     document.getElementById('cart-count').innerText = cart.length;
     document.getElementById('cart-items').innerHTML = cart.map((item, idx) => `
         <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #f9f9f9;">
-            <span style="font-family:var(--heading-font); font-size:1.1rem;">${item.name}</span>
-            <button onclick="window.removeItem(${idx})" style="color:#ccc; border:none; background:none; cursor:pointer; font-size:1.5rem;">&times;</button>
+            <span style="font-family: 'Cormorant Garamond', serif; font-size:1.1rem; font-weight:600;">${item.name}</span>
+            <button class="remove-btn" data-index="${idx}" style="color:red; border:none; background:none; cursor:pointer; font-size:1.5rem;">&times;</button>
         </div>
     `).join('');
+
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.onclick = () => {
+            cart.splice(parseInt(btn.dataset.index), 1);
+            updateUI();
+        };
+    });
+
     const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
     document.getElementById('cart-total').innerText = `Rs. ${total}`;
     document.getElementById('request-notice').style.display = cart.some(i => i.on_request) ? 'block' : 'none';
 }
-
-window.removeItem = (idx) => { cart.splice(idx, 1); updateUI(); };
 
 function setupAnimations() {
     const observer = new IntersectionObserver((entries) => {
