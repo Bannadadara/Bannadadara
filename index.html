@@ -12,8 +12,11 @@
     <header class="navbar">
         <div class="container nav-content">
             <div class="brand">
-                <span class="main-title">Bannada Daara</span>
-                <span class="sub-title">Handmade & Sustainable</span>
+                <img src="logo.png" alt="Logo" class="nav-logo" onerror="this.style.display='none'">
+                <div class="brand-text">
+                    <span class="main-title">Bannada Daara</span>
+                    <span class="sub-title">Handmade & Sustainable</span>
+                </div>
             </div>
             
             <div class="search-container">
@@ -22,12 +25,20 @@
             </div>
 
             <div class="nav-actions">
-                <button id="cart-toggle" class="bag-btn">
-                    BAG (<span id="cart-count">0</span>)
-                </button>
+                <button id="cart-toggle" class="bag-btn">BAG (<span id="cart-count">0</span>)</button>
             </div>
         </div>
     </header>
+
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <div class="container">
+                <h1 class="hero-title">Artistry in Every Stitch</h1>
+                <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
+                <a href="#product-list" class="hero-btn">SHOP COLLECTION</a>
+            </div>
+        </div>
+    </section>
 
     <nav class="category-bar">
         <div class="container cat-flex">
@@ -48,9 +59,8 @@
             </div>
             <div class="about-text reveal">
                 <span class="section-tag">Our Story</span>
-                <h2 class="section-title">Stitched with Love, <br><em>Sustainable by Choice.</em></h2>
-                <p class="about-intro">Bannada Daara transforms upcycled fabrics into premium handcrafted treasures in Dakshina Kannada.</p>
-                
+                <h2 class="section-title">Sustainable by Choice.</h2>
+                <p class="about-intro">Bannada Daara transforms upcycled fabrics into premium treasures.</p>
                 <div id="about-more-content" class="hidden-content">
                     <p>Every piece in our collection is unique. We believe in slow fashion and the beauty of handcrafted details, ensuring that every bag and pouch supports local artisans and a greener planet.</p>
                 </div>
@@ -63,6 +73,12 @@
         <div class="product-grid" id="product-list"></div>
     </main>
 
+    <div id="image-modal" class="image-viewer-modal">
+        <span class="close-viewer">&times;</span>
+        <img class="viewer-content" id="full-res-image">
+        <div id="viewer-caption"></div>
+    </div>
+
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
             <h3>Your Selection</h3>
@@ -70,36 +86,21 @@
         </div>
         <div id="cart-items"></div>
         <div class="sidebar-footer">
-            <div class="total-row">
-                <span>Subtotal</span>
-                <span id="cart-total">Rs. 0</span>
-            </div>
-            <button id="checkout-btn" class="checkout-btn">CHECKOUT VIA WHATSAPP</button>
-        </div>
-    </div>
-
-    <div id="feedback-overlay" class="modal-overlay">
-        <div class="modal-card">
-            <h2>Send Feedback</h2>
-            <p>How was your experience with us?</p>
-            <textarea id="feedback-text" placeholder="Write your thoughts..."></textarea>
-            <div class="modal-btns">
-                <button id="send-feedback-wa" class="checkout-btn">SEND TO WHATSAPP</button>
-                <button id="close-feedback" class="cancel-link">Close</button>
-            </div>
+            <div class="total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
+            <button id="checkout-btn" class="checkout-btn">ORDER VIA WHATSAPP</button>
         </div>
     </div>
 
     <footer class="footer">
-        <div class="container footer-grid">
-            <div>
+        <div class="container">
+            <div class="footer-brand-area">
+                <img src="logo.png" alt="Logo" class="footer-logo" onerror="this.style.display='none'">
                 <h2 class="footer-brand">BANNADA DAARA</h2>
-                <p>Premium Handcrafted Boutique</p>
             </div>
             <div class="footer-contact">
                 <p>Dakshina Kannada, Karnataka</p>
                 <p>WhatsApp: +91 81057 50221</p>
-                <button id="footer-feedback-btn" class="feedback-trigger">SEND FEEDBACK</button>
+                <button id="footer-feedback-btn" class="feedback-trigger">SHARE FEEDBACK</button>
             </div>
         </div>
     </footer>
