@@ -4,15 +4,11 @@ let cart = [];
 
 function init() {
     renderProducts();
+    setupCart();
+    setupFeedback();
+    handleSharedLink();
 
-    const sidebar = document.getElementById('cart-sidebar');
-    const toggle = document.getElementById('cart-toggle');
-    const close = document.getElementById('close-cart');
-
-    toggle.onclick = () => sidebar.classList.add('open');
-    close.onclick = () => sidebar.classList.remove('open');
-
-    // Search and Filter
+    // Search & Filter
     document.getElementById('search-bar').oninput = (e) => {
         renderProducts(document.getElementById('category-filter').value, e.target.value);
     };
@@ -20,18 +16,11 @@ function init() {
         renderProducts(e.target.value, document.getElementById('search-bar').value);
     };
 
-    // Checkout Logic
+    // Checkout
     document.getElementById('checkout-btn').onclick = () => {
-        if (cart.length === 0) return alert("Your bag is empty!");
-        
-        const items = cart.map(i => {
-            const priceText = i.on_request ? "[Price on Request]" : `Rs. ${i.price}`;
-            return `- ${i.name} (${priceText})`;
-        }).join('\n');
-        
-        const total = document.getElementById('cart-total').innerText;
-        const msg = `*Order from Bannada Daara*\n\n*Items:*\n${items}\n\n*Current Subtotal:* ${total}\n\n_Please confirm the final price for custom items._`;
-        
+        if (cart.length === 0) return alert("Bag is empty!");
+        const items = cart.map(i => `- ${i.name} (${i.on_request ? "Price on Request" : "Rs. " + i.price})`).join('\n');
+        const msg = `*Order from Bannada Daara*\n\n*Items:*\n${items}\n\n*Subtotal:* ${document.getElementById('cart-total').innerText}`;
         window.open(`https://wa.me/918105750221?text=${encodeURIComponent(msg)}`, '_blank');
     };
 }
@@ -41,11 +30,12 @@ function renderProducts(cat = 'All', search = '') {
     const filtered = products.filter(p => (cat === 'All' || p.category === cat) && p.name.toLowerCase().includes(search.toLowerCase()));
 
     list.innerHTML = filtered.map(p => `
-        <div class="card">
+        <div class="card" id="product-${p.id}">
             <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/200'">
             <h4>${p.name}</h4>
             <p style="color:#B12704; font-weight:bold;">${p.on_request ? 'Price on Request' : 'Rs. ' + p.price}</p>
             <div class="card-btns">
+                <button class="share-btn" onclick="copyProductLink(${p.id})">🔗</button>
                 <a href="${p.img}" target="_blank" class="view-btn">View</a>
                 <button class="add-btn" onclick="addToCart(${p.id})">Add to Bag</button>
             </div>
@@ -54,28 +44,59 @@ function renderProducts(cat = 'All', search = '') {
 }
 
 window.addToCart = (id) => {
-    const item = products.find(p => p.id === id);
-    cart.push(item);
+    cart.push(products.find(p => p.id === id));
     updateUI();
     document.getElementById('cart-sidebar').classList.add('open');
 };
 
+window.copyProductLink = (id) => {
+    const shareUrl = `${window.location.origin}${window.location.pathname}?id=${id}`;
+    navigator.clipboard.writeText(shareUrl).then(() => {
+        const toast = document.getElementById("toast");
+        toast.className = "toast-notification show";
+        setTimeout(() => toast.className = "toast-notification", 3000);
+    });
+};
+
 function updateUI() {
     document.getElementById('cart-count').innerText = cart.length;
-    const itemsList = document.getElementById('cart-items');
-    
-    itemsList.innerHTML = cart.map((item, index) => `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;">
-            <p style="margin:0; font-size:0.9rem;">${item.name} ${item.on_request ? '<span style="color:#B12704;">(*)</span>' : ''}</p>
-            <button onclick="cart.splice(${index}, 1); updateUI();" style="color:red; background:none; border:none; cursor:pointer; font-size:1.2rem;">&times;</button>
+    document.getElementById('cart-items').innerHTML = cart.map((item, idx) => `
+        <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;">
+            <span>${item.name}</span>
+            <button onclick="window.removeItem(${idx})" style="color:red; background:none; border:none; cursor:pointer;">&times;</button>
         </div>
     `).join('');
-
     const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
-    const hasRequestItem = cart.some(i => i.on_request);
-    
     document.getElementById('cart-total').innerText = `Rs. ${total}`;
-    document.getElementById('request-notice').style.display = hasRequestItem ? 'block' : 'none';
+    document.getElementById('request-notice').style.display = cart.some(i => i.on_request) ? 'block' : 'none';
+}
+
+window.removeItem = (idx) => { cart.splice(idx, 1); updateUI(); };
+
+function setupCart() {
+    const sidebar = document.getElementById('cart-sidebar');
+    document.getElementById('cart-toggle').onclick = () => sidebar.classList.add('open');
+    document.getElementById('close-cart').onclick = () => sidebar.classList.remove('open');
+}
+
+function setupFeedback() {
+    const modal = document.getElementById('feedback-modal');
+    document.getElementById('feedback-btn').onclick = () => modal.style.display = "block";
+    document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
+    document.getElementById('submit-feedback-wa').onclick = () => {
+        const txt = document.getElementById('feedback-text').value;
+        if(!txt) return alert("Type something!");
+        window.open(`https://wa.me/918105750221?text=${encodeURIComponent("*Feedback:* " + txt)}`, '_blank');
+        modal.style.display = "none";
+    };
+}
+
+function handleSharedLink() {
+    const id = new URLSearchParams(window.location.search).get('id');
+    if (id) setTimeout(() => {
+        const el = document.getElementById(`product-${id}`);
+        if(el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.style.border = "2px solid #fb641b"; }
+    }, 500);
 }
 
 document.addEventListener('DOMContentLoaded', init);
