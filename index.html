@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bannada Daara | Premium Handcrafted Shop</title>
+    <title>Bannada Daara | Premium Handcrafted</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -16,29 +16,29 @@
                 <img src="images/logo.png" alt="Logo" class="nav-logo">
                 <div class="brand-text">
                     <span class="main-title">Bannada Daara</span>
-                    <span class="sub-title">Handmade & Sustainable</span>
+                    <span class="sub-title">Dakshina Kannada</span>
                 </div>
             </div>
             
             <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Search treasures...">
+                <input type="text" id="search-bar" placeholder="Search handcrafted treasures...">
                 <button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
 
             <div class="nav-actions">
                 <button id="cart-toggle" class="bag-btn">
-                    <i class="fas fa-shopping-bag"></i> <span class="hide-mobile">BAG</span> (<span id="cart-count">0</span>)
+                    <i class="fas fa-shopping-bag"></i> <span class="hide-mobile">Bag</span> (<span id="cart-count">0</span>)
                 </button>
             </div>
         </div>
     </header>
 
-    <section class="hero-section">
+    <section class="hero-section" style="background-image: url('images/hero-bg.png');">
         <div class="hero-overlay">
             <div class="container hero-animate">
                 <h1 class="hero-title">Artistry in Every Stitch</h1>
                 <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
-                <a href="#shop-section" class="hero-btn"><i class="fas fa-compass"></i> EXPLORE COLLECTION</a>
+                <a href="#shop-section" class="hero-btn">EXPLORE COLLECTION <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
@@ -55,9 +55,18 @@
         <div class="product-grid" id="product-list"></div>
     </main>
 
+    <section class="about-section" style="background-image: url('images/hero-bg.png');">
+        <div class="about-overlay">
+            <div class="container">
+                <h2>About Bannada Daara</h2>
+                <p>Rooted in the heritage of Dakshina Kannada, we bring you sustainable, handmade treasures crafted with passion and precision. Every product tells a story of tradition, quality, and mindful living.</p>
+            </div>
+        </div>
+    </section>
+
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3><i class="fas fa-stars"></i> Your Selection</h3>
+            <h3>Your Selection</h3>
             <div class="header-tools">
                 <button id="clear-cart" class="clear-btn"><i class="fas fa-trash-alt"></i> Remove All</button>
                 <button id="close-cart" class="close-sidebar">&times;</button>
@@ -65,12 +74,15 @@
         </div>
         <div id="cart-items" class="cart-items-container"></div>
         <div class="sidebar-footer">
-            <div class="total-row">
-                <span>Total Amount</span>
-                <span id="cart-total">Rs. 0</span>
-            </div>
-            <button id="checkout-btn" class="checkout-btn"><i class="fab fa-whatsapp"></i> ORDER VIA WHATSAPP</button>
+            <div class="total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
+            <button id="checkout-btn" class="checkout-btn"><i class="fab fa-whatsapp"></i> ORDER ON WHATSAPP</button>
         </div>
+    </div>
+
+    <div id="image-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img">
+        <div id="modal-caption"></div>
     </div>
 
     <footer class="footer">
@@ -80,14 +92,9 @@
                 <span class="footer-title">Bannada Daara</span>
             </div>
             <div class="footer-actions">
-                <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link">
-                    <i class="fab fa-instagram"></i> @bannadadaara
-                </a>
-                <button id="footer-feedback-btn" class="feedback-btn">
-                    <i class="fas fa-comment-dots"></i> SHARE FEEDBACK
-                </button>
+                <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link"><i class="fab fa-instagram"></i> @bannadadaara</a>
+                <button id="footer-feedback-btn" class="feedback-btn"><i class="fas fa-comment"></i> FEEDBACK</button>
             </div>
-            <p class="copyright">&copy; 2024 Crafted in Dakshina Kannada</p>
         </div>
     </footer>
 
