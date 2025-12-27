@@ -12,7 +12,10 @@ body { font-family: 'Montserrat', sans-serif; background: #fff; overflow-x: hidd
 /* --- BRANDING --- */
 .navbar { background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; position: sticky; top: 0; z-index: 1000; }
 .nav-content { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.nav-logo { height: 30px; filter: brightness(0); } /* Small & Black */
+.nav-logo { 
+    height: 30px; 
+    width: auto; 
+} /* Small size, original colors retained */
 .main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #000; }
 
 /* --- HERO & ABOUT (BG IMAGE SECTIONS) --- */
