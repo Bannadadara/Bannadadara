@@ -13,7 +13,7 @@ function init() {
 }
 
 /**
- * Render Product Grid with Staggered Animations
+ * Render Product Grid with Staggered Animations & Custom Badges
  * @param {string} category - Category filter
  * @param {string} searchTerm - Search query filter
  */
@@ -40,20 +40,24 @@ function renderProducts(category = 'All', searchTerm = '') {
 
     // Map through filtered products with animations
     list.innerHTML = filtered.map((p, index) => {
-        // Handle "On Request" pricing logic
+        // Logic for "On Request" items
         const isRequestOnly = p.on_request === true || p.price === 0;
         const priceDisplay = isRequestOnly ? "Price on Request" : `Rs. ${p.price}`;
         const btnText = isRequestOnly ? "INQUIRE" : "ADD TO BAG";
         const btnIcon = isRequestOnly ? "fa-envelope" : "fa-plus";
+        
+        // Ribbon Badge HTML for Custom/Request items
+        const badgeHTML = isRequestOnly ? `<div class="request-badge">Custom Order</div>` : '';
 
         return `
         <div class="product-card" style="animation-delay: ${index * 0.05}s">
             <div class="img-container" onclick="window.viewImage('${p.img}', '${p.name}')">
+                ${badgeHTML}
                 <img src="${p.img}" alt="${p.name}" loading="lazy">
             </div>
             <div class="product-info">
                 <div class="product-name">${p.name}</div>
-                <div class="product-price" style="color: ${isRequestOnly ? '#666' : '#B12704'}">${priceDisplay}</div>
+                <div class="product-price" style="color: ${isRequestOnly ? 'var(--gold)' : '#B12704'}">${priceDisplay}</div>
                 <div class="card-actions">
                     <button class="add-btn" onclick="window.addToCart(${p.id})">
                         <i class="fas ${btnIcon}"></i> ${btnText}
@@ -74,22 +78,18 @@ function renderProducts(category = 'All', searchTerm = '') {
  * Global Window Functions
  */
 
-// Image Modal Logic
 window.viewImage = (src, title) => {
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('modal-img');
     const modalCaption = document.getElementById('modal-caption');
-    
     modalImg.src = src;
     modalCaption.innerText = title;
     modal.style.display = "flex";
 };
 
-// Share Logic (Native Mobile Share + Fallback)
 window.shareProduct = (name) => {
     const text = `Check out this handcrafted ${name} from Bannada Daara!`;
     const url = window.location.href;
-    
     if (navigator.share) {
         navigator.share({ title: 'Bannada Daara', text: text, url: url });
     } else {
@@ -98,32 +98,25 @@ window.shareProduct = (name) => {
     }
 };
 
-// Cart Logic: Add Item
 window.addToCart = (id) => {
     const p = products.find(item => item.id === id);
     const exists = cart.find(i => i.id === id);
-    
     if (exists) {
         exists.qty++;
     } else {
         cart.push({ ...p, qty: 1 });
     }
-    
     saveAndUpdate();
     document.getElementById('cart-sidebar').classList.add('open');
 };
 
-// Cart Logic: Change Quantity (+ or -)
 window.changeQty = (id, delta) => {
     const item = cart.find(i => i.id === id);
     if (!item) return;
-
     item.qty += delta;
-    
     if (item.qty <= 0) {
         cart = cart.filter(i => i.id !== id);
     }
-    
     saveAndUpdate();
 };
 
@@ -153,13 +146,15 @@ function updateUI() {
                 <p>Your bag is empty.</p>
             </div>`;
     } else {
-        itemsDiv.innerHTML = cart.map(item => `
+        itemsDiv.innerHTML = cart.map(item => {
+            const isRequest = item.on_request === true || item.price === 0;
+            return `
             <div class="cart-item-row" style="display:flex; gap:15px; padding:15px 0; border-bottom:1px solid #333; color:white;">
                 <img src="${item.img}" style="width:60px; height:60px; object-fit:cover; border-radius:4px;">
                 <div style="flex:1">
                     <div style="font-weight:600; font-size:0.9rem; margin-bottom: 2px;">${item.name}</div>
                     <div style="color:#c5a059; font-size: 0.85rem; margin-bottom: 8px;">
-                        ${item.price === 0 ? 'Price on Request' : 'Rs. ' + item.price}
+                        ${isRequest ? 'Price on Request' : 'Rs. ' + item.price}
                     </div>
                     <div class="qty-controls" style="display:flex; align-items:center; gap:10px;">
                         <button class="qty-btn" onclick="window.changeQty(${item.id}, -1)">-</button>
@@ -168,10 +163,10 @@ function updateUI() {
                     </div>
                 </div>
                 <div style="font-weight:600; font-size:0.9rem;">
-                    ${item.price === 0 ? '--' : 'Rs. ' + (item.price * item.qty)}
+                    ${isRequest ? '--' : 'Rs. ' + (item.price * item.qty)}
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     }
 }
 
@@ -179,16 +174,13 @@ function updateUI() {
  * Core Event Listeners
  */
 function setupEventListeners() {
-    // Sidebar Navigation
     document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
     document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
     
-    // Modal Interaction
     const modal = document.getElementById('image-modal');
     document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
     window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; };
     
-    // Cart Actions
     document.getElementById('clear-cart').onclick = () => {
         if (cart.length > 0 && confirm("Remove all items from your bag?")) {
             cart = [];
@@ -196,7 +188,6 @@ function setupEventListeners() {
         }
     };
 
-    // Category Filter Buttons
     document.querySelectorAll('.cat-item').forEach(btn => {
         btn.onclick = () => {
             document.querySelector('.cat-item.active').classList.remove('active');
@@ -205,13 +196,11 @@ function setupEventListeners() {
         };
     });
 
-    // Real-time Search Input
     document.getElementById('search-bar').addEventListener('input', (e) => {
         const activeCat = document.querySelector('.cat-item.active').dataset.cat;
         renderProducts(activeCat, e.target.value);
     });
 
-    // WhatsApp Integration
     document.getElementById('footer-feedback-btn').onclick = () => {
         window.open('https://wa.me/918105750221?text=Hi, I have feedback regarding Bannada Daara:', '_blank');
     };
@@ -220,14 +209,17 @@ function setupEventListeners() {
         if (cart.length === 0) return alert("Please add items to your bag first!");
         
         const cartList = cart.map(i => {
-            const priceLabel = i.price === 0 ? "(Price on Request)" : `Rs.${i.price * i.qty}`;
+            const isRequest = i.price === 0 || i.on_request === true;
+            const priceLabel = isRequest ? "[Custom Quote Needed]" : `Rs.${i.price * i.qty}`;
             return `• ${i.name} [x${i.qty}] - ${priceLabel}`;
         }).join('%0A');
         
         const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-        const totalText = total > 0 ? `%0A%0A*Total Estimated: Rs.${total}*` : '';
+        const totalText = total > 0 
+            ? `%0A%0A*Total Estimated: Rs.${total}*%0A(Excluding custom items)` 
+            : '%0A%0A*Requesting Price Quote for Order*';
         
-        window.open(`https://wa.me/918105750221?text=Hello! I am interested in these treasures:%0A%0A${cartList}${totalText}`, '_blank');
+        window.open(`https://wa.me/918105750221?text=Hello Bannada Daara! I am interested in these treasures:%0A%0A${cartList}${totalText}`, '_blank');
     };
 }
 
