@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bannada Daara | Handcrafted Treasures</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,13 +15,17 @@
     <header class="navbar">
         <div class="container nav-content">
             <div class="brand">
-                <img src="images/logo.png" alt="Bannada Daara" class="nav-logo">
+                <img src="images/logo.png" alt="Bannada Daara Logo" class="nav-logo">
                 <span class="main-title">Bannada Daara</span>
             </div>
+            
             <div class="search-container">
                 <input type="text" id="search-bar" placeholder="Search treasures...">
-                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="search-btn" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
+
             <div class="nav-actions">
                 <button id="cart-toggle" class="bag-btn">
                     <i class="fas fa-shopping-bag"></i> 
@@ -35,7 +41,9 @@
             <div class="container hero-animate">
                 <h1 class="hero-title">Artistry in Every Stitch</h1>
                 <p class="hero-subtitle">Premium Handcrafted Treasures from Dakshina Kannada</p>
-                <a href="#shop-section" class="hero-btn">EXPLORE COLLECTION</a>
+                <a href="#shop-section" class="hero-btn">
+                    EXPLORE COLLECTION <i class="fas fa-chevron-right"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -53,19 +61,41 @@
                 </div>
             </div>
         </nav>
+
         <div class="product-grid" id="product-list"></div>
     </main>
 
+    <section class="about-section">
+        <div class="about-overlay">
+            <div class="container">
+                <h2>Our Story</h2>
+                <p>Preserving the heritage of Dakshina Kannada through modern craftsmanship. Every piece we create is a blend of sustainability and tradition, designed for the conscious lifestyle.</p>
+            </div>
+        </div>
+    </section>
+
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <button id="close-cart" class="back-btn"><i class="fas fa-arrow-left"></i> BACK</button>
-            <h3>Your Selection</h3>
-            <button id="clear-cart" class="clear-btn"><i class="fas fa-trash-alt"></i></button>
+            <h3><i class="fas fa-shopping-bag" style="color:var(--gold)"></i> Your Selection</h3>
+            <div class="header-tools">
+                <button id="clear-cart" class="clear-btn">
+                    <i class="fas fa-trash-alt"></i> EMPTY
+                </button>
+                <button id="close-cart" class="close-sidebar" aria-label="Close Bag">&times;</button>
+            </div>
         </div>
-        <div id="cart-items" class="cart-items-container"></div>
+
+        <div id="cart-items" class="cart-items-container">
+            </div>
+
         <div class="sidebar-footer">
-            <div class="total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
-            <button id="checkout-btn" class="checkout-btn">PROCEED TO ORDER <i class="fab fa-whatsapp"></i></button>
+            <div class="total-row">
+                <span>Subtotal</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn">
+                PROCEED TO ORDER <i class="fab fa-whatsapp"></i>
+            </button>
         </div>
     </div>
 
@@ -73,24 +103,46 @@
         <div class="modal-form-content">
             <span class="close-order-modal">&times;</span>
             <h3>Delivery Details</h3>
+            <p style="font-size: 0.8rem; color: #888; margin-bottom: 20px;">Please provide your details to complete the WhatsApp order.</p>
+            
             <div class="form-group">
-                <label>Full Name</label>
+                <label for="cust-name">Full Name</label>
                 <input type="text" id="cust-name" placeholder="Enter your name">
             </div>
             <div class="form-group">
-                <label>Address</label>
+                <label for="cust-address">Delivery Address</label>
                 <textarea id="cust-address" rows="3" placeholder="Street, City, Pincode"></textarea>
             </div>
-            <button id="confirm-order-btn" class="checkout-btn">SEND TO WHATSAPP</button>
+            <button id="confirm-order-btn" class="checkout-btn" style="width: 100%;">SEND TO WHATSAPP</button>
         </div>
     </div>
 
     <div id="image-modal" class="modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modal-img">
+        <span class="close-modal" aria-label="Close View">&times;</span>
+        <img class="modal-content" id="modal-img" alt="Enlarged product view">
         <div id="modal-caption"></div>
     </div>
 
-    <script type="module" src="script.js"></script>
+    <footer class="footer">
+        <div class="container" style="text-align: center; padding: 40px 0;">
+            <div class="footer-brand" style="margin-bottom: 20px;">
+                <img src="images/logo.png" alt="Logo" class="footer-logo">
+                <span class="footer-title" style="display: block; margin-top: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;">Bannada Daara</span>
+            </div>
+            <div class="footer-actions" style="display: flex; justify-content: center; gap: 20px; align-items: center; margin-bottom: 20px;">
+                <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link" style="color: white; text-decoration: none;">
+                    <i class="fab fa-instagram"></i> @bannadadaara
+                </a>
+                <button id="footer-feedback-btn" class="feedback-btn" style="padding: 8px 15px; background: transparent; border: 1px solid var(--gold); color: var(--gold); cursor: pointer; border-radius: 4px;">
+                    <i class="fas fa-comment"></i> FEEDBACK
+                </button>
+            </div>
+            <p class="copyright" style="opacity: 0.6; font-size: 0.8rem;">
+                &copy; 2025 Crafted with Heart in Dakshina Kannada.
+            </p>
+        </div>
+    </footer>
+
+    <script type="module" src="app.js"></script>
 </body>
 </html>
