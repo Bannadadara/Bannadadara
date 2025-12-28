@@ -5,7 +5,6 @@
     --gold: #c5a059;
     --black: #0a0a0a;
     --white: #ffffff;
-    --gray-light: #f9f9f9;
     --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -20,21 +19,23 @@ body {
     background: var(--white); 
     overflow-x: hidden; 
     scroll-behavior: smooth; 
-    line-height: 1.6;
-    color: #333;
 }
 
 .container { 
-    max-width: 1200px; 
-    margin: 0 auto; 
-    width: 90%; 
+    max-width: 1300px; 
+    margin: auto; 
+    width: 92%; 
 }
 
 /* =========================================
-   2. HEADER & NAVIGATION (ALIGNED)
+   2. HEADER & NAVIGATION
    ========================================= */
-.navbar { 
+.navbar, .footer { 
     background: var(--black); 
+    color: var(--white); 
+}
+
+.navbar { 
     padding: 12px 0; 
     position: sticky; 
     top: 0; 
@@ -46,27 +47,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
 }
 
-.brand {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}
+.nav-logo { height: 25px; width: auto; margin-right: 10px; }
+.footer-logo { height: 22px; width: auto; margin-right: 10px; }
+.main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--white); }
 
-.nav-logo { height: 28px; width: auto; margin-right: 12px; }
-.main-title { 
-    font-family: 'Cormorant Garamond', serif; 
-    font-size: 1.5rem; 
-    color: var(--white); 
-}
-
-/* Responsive Search Bar */
+/* --- ENHANCED SEARCH BAR --- */
 .search-container {
     display: flex;
-    flex: 1;
-    max-width: 400px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid #444;
     border-radius: 25px;
@@ -82,13 +71,13 @@ body {
 }
 
 #search-bar {
-    width: 100%;
     background: transparent;
     border: none;
     color: white;
     padding: 8px;
     outline: none;
     font-family: 'Montserrat', sans-serif;
+    width: 150px;
 }
 
 .search-btn {
@@ -96,16 +85,22 @@ body {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     cursor: pointer;
+    transition: var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
 }
 
-/* Bag Button */
+.search-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    background: #d4af37;
+}
+
+/* --- THE MAIN BAG BUTTON --- */
 .bag-btn {
     background: linear-gradient(135deg, #c5a059 0%, #a68544 100%);
     color: white;
@@ -113,85 +108,35 @@ body {
     padding: 8px 18px;
     border-radius: 50px;
     font-weight: 600;
+    letter-spacing: 1px;
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.bag-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
+}
+
+.bag-btn i {
+    font-size: 1.1rem;
+    animation: bagSway 3s infinite ease-in-out;
 }
 
 #cart-count {
     background: white;
     color: var(--black);
-    padding: 2px 7px;
+    padding: 2px 6px;
     border-radius: 10px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
 }
 
 /* =========================================
-   3. RESPONSIVE PRODUCT GRID (ALIGNMENT FIX)
-   ========================================= */
-.product-grid {
-    display: grid;
-    /* This ensures cards are aligned and responsive */
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 30px;
-    padding: 40px 0;
-}
-
-.product-card {
-    background: white;
-    border: 1px solid #eee;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Keeps cards in a row equal height */
-    transition: var(--transition);
-    position: relative;
-}
-
-.product-card:hover {
-    border-color: var(--gold);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-
-.img-container {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Forces square images for perfect alignment */
-    overflow: hidden;
-    background: var(--gray-light);
-    margin-bottom: 15px;
-}
-
-.img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.product-info {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* Pushes content to fill space */
-}
-
-.product-name {
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 8px;
-    min-height: 2.4em; /* Standardizes text height across cards */
-}
-
-.product-price {
-    font-weight: 700;
-    color: #B12704;
-    margin-bottom: 15px;
-}
-
-/* =========================================
-   4. SIDEBAR & MODALS
+   3. SIDEBAR (CART) & CLOSE CONTROLS
    ========================================= */
 .sidebar { 
     position: fixed; 
@@ -218,112 +163,266 @@ body {
     margin-bottom: 20px;
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-left h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+}
+
+/* Top-Left Close Button */
 .close-sidebar-alt {
     background: transparent;
     border: 1px solid #444;
     color: var(--gold);
+    font-size: 1.2rem;
+    cursor: pointer;
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: var(--transition);
 }
 
-/* Address Modal */
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none; 
-    align-items: center;
+.close-sidebar-alt:hover {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+}
+
+.clear-btn {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.clear-btn:hover {
+    background: var(--gold);
+    color: white;
+}
+
+.cart-items-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* =========================================
+   4. ADDRESS POPUP (MODAL)
+   ========================================= */
+#address-modal {
+    display: none; /* Controlled by JS */
     justify-content: center;
-    z-index: 3000;
-    padding: 20px;
+    align-items: center;
 }
 
 .address-popup-content {
     background: #1a1a1a;
-    width: 100%;
-    max-width: 450px;
+    color: white;
+    width: 90%;
+    max-width: 400px;
     padding: 30px;
     border-radius: 12px;
     border: 1px solid var(--gold);
-    animation: fadeInUp 0.4s ease;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    position: relative;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.address-popup-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 10px;
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin: 20px 0;
+    text-align: left;
 }
 
 .input-group label {
     display: block;
-    color: var(--gold);
     font-size: 0.75rem;
+    color: var(--gold);
+    margin-bottom: 8px;
     text-transform: uppercase;
-    margin-bottom: 5px;
+    letter-spacing: 1px;
 }
 
 .input-group input, .input-group textarea {
     width: 100%;
-    padding: 12px;
     background: #222;
     border: 1px solid #444;
     color: white;
+    padding: 12px;
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    border-color: var(--gold);
+}
+
+.popup-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.cancel-btn {
+    flex: 1;
+    background: transparent;
+    color: #888;
+    border: 1px solid #444;
+    padding: 12px;
+    cursor: pointer;
     border-radius: 6px;
 }
 
-/* =========================================
-   5. RESPONSIVE BREAKPOINTS
-   ========================================= */
-
-/* Tablets */
-@media (max-width: 992px) {
-    .hero-title { font-size: 2.8rem; }
+.confirm-btn {
+    flex: 2;
+    background: var(--gold);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: var(--transition);
 }
 
-/* Mobile Devices */
-@media (max-width: 768px) {
-    .nav-content { flex-wrap: wrap; }
-    
-    .brand { order: 1; }
-    .nav-actions { order: 2; }
-    
-    /* Search bar takes full width on mobile for better accessibility */
-    .search-container { 
-        order: 3; 
-        min-width: 100%; 
-        margin: 10px 0 5px 0;
-    }
-
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
-        gap: 15px;
-    }
-    
-    .sidebar { width: 100%; }
-    .hero-title { font-size: 2.2rem; }
-    .hide-mobile { display: none; }
-}
-
-/* Small Phones */
-@media (max-width: 480px) {
-    .product-grid {
-        grid-template-columns: 1fr; /* 1 item per row on very small screens */
-    }
+.confirm-btn:hover {
+    background: #d4af37;
+    transform: translateY(-2px);
 }
 
 /* =========================================
-   6. ANIMATIONS
+   5. FILTER BAR & GRID
    ========================================= */
+.category-bar {
+    padding: 30px 0 10px 0;
+    position: sticky;
+    top: 60px;
+    background: white;
+    z-index: 900;
+}
+
+.cat-flex {
+    display: flex;
+    gap: 12px;
+    padding: 10px 5px;
+    overflow-x: auto;
+}
+
+.cat-item {
+    white-space: nowrap;
+    padding: 10px 24px;
+    border: 1.5px solid #eee;
+    background: #fdfdfd;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.cat-item.active {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.product-card {
+    border: 1px solid #eee; 
+    padding: 12px; 
+    display: flex; 
+    flex-direction: column;
+    background: var(--white); 
+    transition: var(--transition); 
+    position: relative;
+}
+
+.product-card:hover { 
+    border-color: var(--gold); 
+    transform: translateY(-5px); 
+}
+
+/* =========================================
+   6. HERO & ABOUT
+   ========================================= */
+.hero-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    background: url('images/hero-bg.jpg') center/cover fixed;
+}
+
+.hero-overlay, .about-overlay { 
+    background: rgba(0, 0, 0, 0.65); 
+    padding: 100px 0; 
+    text-align: center; 
+    color: var(--white); 
+    width: 100%;
+}
+
+.hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   7. MODALS & ANIMATIONS
+   ========================================= */
+.modal { 
+    display: none; 
+    position: fixed; 
+    z-index: 3000; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.9); 
+}
+
 @keyframes bagSway {
     0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-8deg); }
-    75% { transform: rotate(8deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   8. RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.2rem; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .sidebar { width: 100%; }
+    .hide-mobile { display: none; }
 }
