@@ -149,17 +149,16 @@ body {
 /* =========================================
    3. HERO & ABOUT SECTIONS
    ========================================= */
-.hero-section {
-    background-image: url('images/hero-bg.jpg');
+.hero-section, .about-section {
+    background-image: url('images/hero-bg.jpg'); /* Ensure this file exists */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     position: relative;
     width: 100%;
-    min-height: 65vh; 
-    display: flex; 
-    align-items: center;
 }
+
+.hero-section { min-height: 65vh; display: flex; align-items: center; }
 
 .hero-overlay, .about-overlay { 
     background: rgba(0, 0, 0, 0.65); 
