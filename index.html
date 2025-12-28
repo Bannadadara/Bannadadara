@@ -7,7 +7,6 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -62,7 +61,8 @@
             </div>
         </nav>
 
-        <div class="product-grid" id="product-list"></div>
+        <div class="product-grid" id="product-list">
+            </div>
     </main>
 
     <section class="about-section">
@@ -81,7 +81,7 @@
                 <button id="clear-cart" class="clear-btn">
                     <i class="fas fa-trash-alt"></i> EMPTY
                 </button>
-                <button id="close-cart" class="close-sidebar" aria-label="Close Bag">&times;</button>
+                <button id="close-cart" class="close-sidebar">&times;</button>
             </div>
         </div>
 
@@ -94,46 +94,28 @@
                 <span id="cart-total">Rs. 0</span>
             </div>
             <button id="checkout-btn" class="checkout-btn">
-                PROCEED TO ORDER <i class="fab fa-whatsapp"></i>
+                PROCEED TO ORDER ON WHATSAPP <i class="fab fa-whatsapp"></i>
             </button>
         </div>
     </div>
 
-    <div id="order-modal" class="modal">
-        <div class="modal-form-content">
-            <span class="close-order-modal">&times;</span>
-            <h3>Delivery Details</h3>
-            <p style="font-size: 0.8rem; color: #888; margin-bottom: 20px;">Please provide your details to complete the WhatsApp order.</p>
-            
-            <div class="form-group">
-                <label for="cust-name">Full Name</label>
-                <input type="text" id="cust-name" placeholder="Enter your name">
-            </div>
-            <div class="form-group">
-                <label for="cust-address">Delivery Address</label>
-                <textarea id="cust-address" rows="3" placeholder="Street, City, Pincode"></textarea>
-            </div>
-            <button id="confirm-order-btn" class="checkout-btn" style="width: 100%;">SEND TO WHATSAPP</button>
-        </div>
-    </div>
-
     <div id="image-modal" class="modal">
-        <span class="close-modal" aria-label="Close View">&times;</span>
+        <span class="close-modal">&times;</span>
         <img class="modal-content" id="modal-img" alt="Enlarged product view">
         <div id="modal-caption"></div>
     </div>
 
     <footer class="footer">
-        <div class="container" style="text-align: center; padding: 40px 0;">
+        <div class="container" style="text-align: center;">
             <div class="footer-brand" style="margin-bottom: 20px;">
                 <img src="images/logo.png" alt="Logo" class="footer-logo">
-                <span class="footer-title" style="display: block; margin-top: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;">Bannada Daara</span>
+                <span class="footer-title">Bannada Daara</span>
             </div>
             <div class="footer-actions" style="display: flex; justify-content: center; gap: 20px; align-items: center; margin-bottom: 20px;">
                 <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link" style="color: white; text-decoration: none;">
                     <i class="fab fa-instagram"></i> @bannadadaara
                 </a>
-                <button id="footer-feedback-btn" class="feedback-btn" style="padding: 8px 15px; background: transparent; border: 1px solid var(--gold); color: var(--gold); cursor: pointer; border-radius: 4px;">
+                <button id="footer-feedback-btn" class="feedback-btn" style="padding: 8px 15px;">
                     <i class="fas fa-comment"></i> FEEDBACK
                 </button>
             </div>
@@ -143,6 +125,6 @@
         </div>
     </footer>
 
-    <script type="module" src="app.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 import { products } from './data.js';
 
-// 1. STATE MANAGEMENT
+// Initialize cart from LocalStorage or empty array
 let cart = JSON.parse(localStorage.getItem('bd-cart')) || [];
 
 /**
@@ -13,17 +13,21 @@ function init() {
 }
 
 /**
- * 2. CORE RENDERING LOGIC
+ * Render Product Grid with Staggered Animations & Custom Badges
+ * @param {string} category - Category filter
+ * @param {string} searchTerm - Search query filter
  */
 function renderProducts(category = 'All', searchTerm = '') {
     const list = document.getElementById('product-list');
     
+    // Multi-level filtering: Category + Search Term
     const filtered = products.filter(p => {
         const matchesCategory = category === 'All' || p.category === category;
         const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesCategory && matchesSearch;
     });
 
+    // Handle Empty State
     if (filtered.length === 0) {
         list.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; color: #888;">
@@ -34,11 +38,15 @@ function renderProducts(category = 'All', searchTerm = '') {
         return;
     }
 
+    // Map through filtered products with animations
     list.innerHTML = filtered.map((p, index) => {
+        // Logic for "On Request" items
         const isRequestOnly = p.on_request === true || p.price === 0;
         const priceDisplay = isRequestOnly ? "Price on Request" : `Rs. ${p.price}`;
         const btnText = isRequestOnly ? "INQUIRE" : "ADD TO BAG";
         const btnIcon = isRequestOnly ? "fa-envelope" : "fa-plus";
+        
+        // Ribbon Badge HTML for Custom/Request items
         const badgeHTML = isRequestOnly ? `<div class="request-badge">Custom Order</div>` : '';
 
         return `
@@ -54,25 +62,28 @@ function renderProducts(category = 'All', searchTerm = '') {
                     <button class="add-btn" onclick="window.addToCart(${p.id})">
                         <i class="fas ${btnIcon}"></i> ${btnText}
                     </button>
-                    <button class="icon-btn" onclick="window.viewImage('${p.img}', '${p.name}')">
+                    <button class="icon-btn" onclick="window.viewImage('${p.img}', '${p.name}')" title="Quick View">
                         <i class="fas fa-eye"></i>
                     </button>
-                    <button class="icon-btn" onclick="window.shareProduct('${p.name}')">
+                    <button class="icon-btn" onclick="window.shareProduct('${p.name}')" title="Share">
                         <i class="fas fa-share-alt"></i>
                     </button>
                 </div>
             </div>
-        </div>`;
-    }).join('');
+        </div>
+    `;}).join('');
 }
 
 /**
- * 3. GLOBAL ACTIONS (Attached to window for HTML onclicks)
+ * Global Window Functions
  */
+
 window.viewImage = (src, title) => {
     const modal = document.getElementById('image-modal');
-    document.getElementById('modal-img').src = src;
-    document.getElementById('modal-caption').innerText = title;
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    modalImg.src = src;
+    modalCaption.innerText = title;
     modal.style.display = "flex";
 };
 
@@ -110,7 +121,7 @@ window.changeQty = (id, delta) => {
 };
 
 /**
- * 4. PERSISTENCE & UI UPDATES
+ * Persistence & UI Update Logic
  */
 function saveAndUpdate() {
     localStorage.setItem('bd-cart', JSON.stringify(cart));
@@ -125,8 +136,8 @@ function updateUI() {
     const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
     const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
 
-    if(cartCount) cartCount.innerText = totalQty;
-    if(cartTotal) cartTotal.innerText = `Rs. ${totalPrice}`;
+    cartCount.innerText = totalQty;
+    cartTotal.innerText = `Rs. ${totalPrice}`;
 
     if (cart.length === 0) {
         itemsDiv.innerHTML = `
@@ -154,28 +165,22 @@ function updateUI() {
                 <div style="font-weight:600; font-size:0.9rem;">
                     ${isRequest ? '--' : 'Rs. ' + (item.price * item.qty)}
                 </div>
-            </div>`;
-        }).join('');
+            </div>
+        `}).join('');
     }
 }
 
 /**
- * 5. EVENT LISTENERS
+ * Core Event Listeners
  */
 function setupEventListeners() {
-    const orderModal = document.getElementById('order-modal');
-
-    // Sidebar Controls
     document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
     document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
     
-    // Image Modal Close
-    const imgModal = document.getElementById('image-modal');
-    if (document.querySelector('.close-modal')) {
-        document.querySelector('.close-modal').onclick = () => imgModal.style.display = "none";
-    }
-
-    // Clear Cart
+    const modal = document.getElementById('image-modal');
+    document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
+    window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; };
+    
     document.getElementById('clear-cart').onclick = () => {
         if (cart.length > 0 && confirm("Remove all items from your bag?")) {
             cart = [];
@@ -183,7 +188,6 @@ function setupEventListeners() {
         }
     };
 
-    // Category Filtering
     document.querySelectorAll('.cat-item').forEach(btn => {
         btn.onclick = () => {
             document.querySelector('.cat-item.active').classList.remove('active');
@@ -192,58 +196,32 @@ function setupEventListeners() {
         };
     });
 
-    // Search Bar
     document.getElementById('search-bar').addEventListener('input', (e) => {
         const activeCat = document.querySelector('.cat-item.active').dataset.cat;
         renderProducts(activeCat, e.target.value);
     });
 
-    // Feedback
     document.getElementById('footer-feedback-btn').onclick = () => {
         window.open('https://wa.me/918105750221?text=Hi, I have feedback regarding Bannada Daara:', '_blank');
     };
 
-    // --- Order Workflow ---
-    
-    // 1. Open Address Modal
     document.getElementById('checkout-btn').onclick = () => {
-        if (cart.length === 0) return alert("Your bag is empty!");
-        orderModal.style.display = "block";
-    };
-
-    // 2. Close Address Modal
-    document.querySelector('.close-order-modal').onclick = () => orderModal.style.display = "none";
-
-    // 3. Final WhatsApp Order Placement
-    document.getElementById('confirm-order-btn').onclick = () => {
-        const name = document.getElementById('cust-name').value;
-        const address = document.getElementById('cust-address').value;
-
-        if(!name || !address) return alert("Please provide your name and address.");
-
-        const cartText = cart.map(i => {
+        if (cart.length === 0) return alert("Please add items to your bag first!");
+        
+        const cartList = cart.map(i => {
             const isRequest = i.price === 0 || i.on_request === true;
-            const priceLabel = isRequest ? "[Price on Request]" : `Rs.${i.price * i.qty}`;
-            return `• ${i.name} (x${i.qty}) - ${priceLabel}`;
+            const priceLabel = isRequest ? "[Custom Quote Needed]" : `Rs.${i.price * i.qty}`;
+            return `• ${i.name} [x${i.qty}] - ${priceLabel}`;
         }).join('%0A');
-
+        
         const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        const totalText = total > 0 
+            ? `%0A%0A*Total Estimated: Rs.${total}*%0A(Excluding custom items)` 
+            : '%0A%0A*Requesting Price Quote for Order*';
         
-        const waMsg = `*New Order - Bannada Daara*%0A%0A` +
-                      `*Customer Details*%0A` +
-                      `*Name:* ${name}%0A` +
-                      `*Address:* ${address}%0A%0A` +
-                      `*Items:*%0A${cartText}%0A%0A` +
-                      `*Total Amount:* Rs. ${total}%0A%0A` +
-                      `_Please confirm availability and delivery timeline._`;
-        
-        window.open(`https://wa.me/918105750221?text=${waMsg}`, '_blank');
-        orderModal.style.display = "none";
-        
-        // Optional: Clear cart after ordering
-        // cart = []; saveAndUpdate();
+        window.open(`https://wa.me/918105750221?text=Hello Bannada Daara! I am interested in these treasures:%0A%0A${cartList}${totalText}`, '_blank');
     };
 }
 
-// Start the app
+// Run Application
 init();

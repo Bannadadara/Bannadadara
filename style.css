@@ -28,11 +28,14 @@ body {
 }
 
 /* =========================================
-   2. HEADER & NAVIGATION
+   2. HEADER, NAVIGATION & PREMIUM BUTTONS
    ========================================= */
-.navbar { 
+.navbar, .footer { 
     background: var(--black); 
-    color: var(--white);
+    color: var(--white); 
+}
+
+.navbar { 
     padding: 12px 0; 
     position: sticky; 
     top: 0; 
@@ -47,9 +50,10 @@ body {
 }
 
 .nav-logo { height: 25px; width: auto; margin-right: 10px; }
+.footer-logo { height: 22px; width: auto; margin-right: 10px; }
 .main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--white); }
 
-/* --- Search Bar --- */
+/* --- ENHANCED SEARCH BAR --- */
 .search-container {
     display: flex;
     background: rgba(255, 255, 255, 0.1);
@@ -76,6 +80,7 @@ body {
     width: 150px;
 }
 
+/* --- THE SEARCH BUTTON --- */
 .search-btn {
     background: var(--gold);
     color: white;
@@ -96,7 +101,7 @@ body {
     background: #d4af37;
 }
 
-/* --- Bag Button --- */
+/* --- THE MAIN BAG BUTTON (NAVBAR) --- */
 .bag-btn {
     background: linear-gradient(135deg, #c5a059 0%, #a68544 100%);
     color: white;
@@ -118,7 +123,10 @@ body {
     box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
 }
 
-.bag-btn i { animation: bagSway 3s infinite ease-in-out; }
+.bag-btn i {
+    font-size: 1.1rem;
+    animation: bagSway 3s infinite ease-in-out;
+}
 
 #cart-count {
     background: white;
@@ -130,7 +138,7 @@ body {
 }
 
 /* =========================================
-   3. CATEGORY FILTER BAR
+   3. PREMIUM FILTER BAR
    ========================================= */
 .category-bar {
     padding: 30px 0 10px 0;
@@ -162,25 +170,79 @@ body {
     background: #fdfdfd;
     border-radius: 50px;
     cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
     font-weight: 600;
+    letter-spacing: 0.5px;
     color: #555;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.cat-item:hover, .cat-item.active {
+.cat-item:hover {
     border-color: var(--gold);
     color: var(--gold);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 .cat-item.active {
     background: var(--gold);
     color: white;
+    border-color: var(--gold);
     box-shadow: 0 8px 15px rgba(197, 160, 89, 0.3);
 }
 
 /* =========================================
-   4. PRODUCT GRID & CARDS
+   4. HERO & ABOUT SECTIONS
+   ========================================= */
+.hero-section, .about-section {
+    background-image: url('images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    width: 100%;
+}
+
+.hero-section { min-height: 60vh; display: flex; align-items: center; }
+
+.hero-overlay, .about-overlay { 
+    background: rgba(0, 0, 0, 0.65); 
+    padding: 100px 0; 
+    text-align: center; 
+    color: var(--white); 
+    width: 100%;
+}
+
+.hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #f0f0f0;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.about-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #e0e0e0;
+}
+
+/* =========================================
+   5. PRODUCT GRID & CARDS
    ========================================= */
 .product-grid {
     display: grid;
@@ -192,19 +254,19 @@ body {
 .product-card {
     border: 1px solid #eee; 
     padding: 12px; 
+    display: flex; 
+    flex-direction: column;
     background: var(--white); 
     transition: var(--transition); 
-    position: relative;
-    display: flex;
-    flex-direction: column;
     height: 100%;
-    animation: productFadeIn 0.6s ease forwards;
+    animation: productFadeIn 0.5s ease forwards;
+    position: relative;
 }
 
 .product-card:hover { 
-    transform: translateY(-10px); 
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    border-color: var(--gold);
+    border: 1px solid var(--gold); 
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
 .img-container { 
@@ -217,81 +279,212 @@ body {
 }
 
 .img-container img { 
-    width: 100%; height: 100%; object-fit: cover; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
     transition: transform 0.5s ease;
 }
 
 .product-card:hover .img-container img { transform: scale(1.08); }
 
-/* --- Badge & Price --- */
+/* --- RIBBON / BADGE --- */
 .request-badge {
-    position: absolute; top: 10px; right: -5px;
-    background: var(--gold); color: white;
-    padding: 5px 12px; font-size: 0.65rem; font-weight: 600;
-    text-transform: uppercase; z-index: 10;
+    position: absolute;
+    top: 10px;
+    right: -5px;
+    background: var(--gold);
+    color: white;
+    padding: 5px 12px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 10;
     box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
 }
 
-.product-name { font-size: 0.95rem; margin: 12px 0 5px; color: #333; height: 2.8em; overflow: hidden; }
-.product-price { font-size: 1.1rem; font-weight: 600; color: #B12704; margin-bottom: 12px; }
+.request-badge::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    border-left: 5px solid transparent;
+    border-top: 5px solid #8a6d35;
+}
 
+.product-name { 
+    font-size: 0.95rem; 
+    height: 2.8em; 
+    overflow: hidden; 
+    margin: 12px 0 5px 0; 
+    color: #333; 
+}
+
+.product-price { 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    color: #B12704; 
+    margin-bottom: 12px; 
+}
+
+/* --- BUTTONS & ACTIONS --- */
 .card-actions { display: flex; gap: 8px; margin-top: auto; }
 
 .add-btn { 
-    flex: 2; padding: 10px; background: var(--gold); color: white;
-    border: none; border-radius: 4px; font-weight: 600; cursor: pointer;
+    flex: 2; 
+    padding: 10px; 
+    font-size: 0.85rem; 
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
 
-.icon-btn { background: #f4f4f4; border: none; padding: 10px; border-radius: 4px; cursor: pointer; flex: 1; }
+.add-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(30deg);
+    transition: 0.5s;
+}
+
+.add-btn:hover::after { left: 120%; }
+
+.icon-btn { 
+    background: #f4f4f4; 
+    border: none; 
+    padding: 10px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.icon-btn:hover { background: #e8e8e8; }
 
 /* =========================================
-   5. SIDEBAR & BAG
+   6. SIDEBAR & BAG CONTROLS
    ========================================= */
 .sidebar { 
-    position: fixed; right: -100%; top: 0; width: 350px; 
-    height: 100%; background: var(--black); color: var(--white); 
-    z-index: 2001; transition: var(--transition); padding: 20px;
+    position: fixed; 
+    right: -100%; 
+    top: 0; 
+    width: 350px; 
+    height: 100%; 
+    background: var(--black); 
+    color: var(--white); 
+    z-index: 2001; 
+    transition: var(--transition); 
+    padding: 20px;
 }
 .sidebar.open { right: 0; }
 
-.qty-controls { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
-.qty-btn { background: #333; color: white; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; }
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* --- EMPTY BAG BUTTON --- */
+.clear-btn {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.clear-btn:hover {
+    background: var(--gold);
+    color: white;
+    box-shadow: 0 0 12px rgba(197, 160, 89, 0.5);
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.qty-btn {
+    background: #333;
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.qty-btn:hover { background: var(--gold); }
 
 /* =========================================
-   6. DYNAMIC ORDER MODAL (Checkout Form)
+   7. MODALS & ANIMATIONS
    ========================================= */
 .modal { 
-    display: none; position: fixed; z-index: 3000; top: 0; left: 0; 
-    width: 100%; height: 100%; background: rgba(0,0,0,0.85); 
-    backdrop-filter: blur(5px);
+    display: none; 
+    position: fixed; 
+    z-index: 3000; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.9); 
 }
 
-.modal-form-content {
-    background: #1a1a1a; color: white; width: 90%; max-width: 400px;
-    margin: 15vh auto; padding: 30px; border-radius: 15px;
-    border: 1px solid var(--gold); animation: slideUp 0.4s ease;
+.modal-content { max-width: 90%; max-height: 80%; margin: auto; padding-top: 60px; display: block; }
+
+.close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+
+@keyframes productFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.form-group { margin-bottom: 15px; }
-.form-group label { display: block; color: var(--gold); font-size: 0.8rem; margin-bottom: 5px; }
-.form-group input, .form-group textarea {
-    width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 5px; outline: none;
+@keyframes bagSway {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
 }
-.form-group input:focus { border-color: var(--gold); }
 
-/* =========================================
-   7. ANIMATIONS
-   ========================================= */
-@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes productFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes bagSway { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-animate { animation: fadeInUp 1s ease-out forwards; }
 
 /* =========================================
    8. RESPONSIVE MEDIA QUERIES
    ========================================= */
 @media (max-width: 768px) {
-    .hero-title { font-size: 2rem; }
+    .hero-section { background-attachment: scroll; min-height: 50vh; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-overlay { padding: 60px 0; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .hide-mobile { display: none; }
     .sidebar { width: 100%; }
     .cat-wrapper { justify-content: flex-start; }
     #search-bar { width: 100px; }
