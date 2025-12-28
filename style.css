@@ -1,3 +1,6 @@
+/* =========================================
+   1. CORE VARIABLES & RESET
+   ========================================= */
 :root {
     --gold: #c5a059;
     --black: #0a0a0a;
@@ -5,17 +8,258 @@
     --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Base Styles & Responsiveness */
-body { font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
-.container { max-width: 1200px; margin: auto; width: 92%; }
-
-/* --- Back Button --- */
-.back-btn {
-    background: transparent; border: none; color: var(--gold);
-    cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px;
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
 }
 
-/* --- Dynamic Order Modal --- */
+body { 
+    font-family: 'Montserrat', sans-serif; 
+    background: var(--white); 
+    overflow-x: hidden; 
+    scroll-behavior: smooth; 
+}
+
+.container { 
+    max-width: 1300px; 
+    margin: auto; 
+    width: 92%; 
+}
+
+/* =========================================
+   2. HEADER & NAVIGATION
+   ========================================= */
+.navbar { 
+    background: var(--black); 
+    color: var(--white);
+    padding: 12px 0; 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    border-bottom: 1px solid #222; 
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-logo { height: 25px; width: auto; margin-right: 10px; }
+.main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--white); }
+
+/* --- Search Bar --- */
+.search-container {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #444;
+    border-radius: 25px;
+    padding: 2px 5px 2px 15px;
+    transition: var(--transition);
+    align-items: center;
+}
+
+.search-container:focus-within {
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(197, 160, 89, 0.2);
+}
+
+#search-bar {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 8px;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    width: 150px;
+}
+
+.search-btn {
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
+}
+
+.search-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    background: #d4af37;
+}
+
+/* --- Bag Button --- */
+.bag-btn {
+    background: linear-gradient(135deg, #c5a059 0%, #a68544 100%);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.bag-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
+}
+
+.bag-btn i { animation: bagSway 3s infinite ease-in-out; }
+
+#cart-count {
+    background: white;
+    color: var(--black);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    margin-left: 5px;
+}
+
+/* =========================================
+   3. CATEGORY FILTER BAR
+   ========================================= */
+.category-bar {
+    padding: 30px 0 10px 0;
+    position: sticky;
+    top: 60px;
+    background: white;
+    z-index: 900;
+}
+
+.cat-wrapper {
+    overflow-x: auto;
+    scrollbar-width: none;
+    display: flex;
+    justify-content: center;
+}
+
+.cat-wrapper::-webkit-scrollbar { display: none; }
+
+.cat-flex {
+    display: flex;
+    gap: 12px;
+    padding: 10px 5px;
+}
+
+.cat-item {
+    white-space: nowrap;
+    padding: 10px 24px;
+    border: 1.5px solid #eee;
+    background: #fdfdfd;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cat-item:hover, .cat-item.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.cat-item.active {
+    background: var(--gold);
+    color: white;
+    box-shadow: 0 8px 15px rgba(197, 160, 89, 0.3);
+}
+
+/* =========================================
+   4. PRODUCT GRID & CARDS
+   ========================================= */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.product-card {
+    border: 1px solid #eee; 
+    padding: 12px; 
+    background: var(--white); 
+    transition: var(--transition); 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    animation: productFadeIn 0.6s ease forwards;
+}
+
+.product-card:hover { 
+    transform: translateY(-10px); 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: var(--gold);
+}
+
+.img-container { 
+    width: 100%; 
+    aspect-ratio: 1/1; 
+    position: relative; 
+    overflow: hidden; 
+    background: #f9f9f9; 
+    cursor: pointer; 
+}
+
+.img-container img { 
+    width: 100%; height: 100%; object-fit: cover; 
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .img-container img { transform: scale(1.08); }
+
+/* --- Badge & Price --- */
+.request-badge {
+    position: absolute; top: 10px; right: -5px;
+    background: var(--gold); color: white;
+    padding: 5px 12px; font-size: 0.65rem; font-weight: 600;
+    text-transform: uppercase; z-index: 10;
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+}
+
+.product-name { font-size: 0.95rem; margin: 12px 0 5px; color: #333; height: 2.8em; overflow: hidden; }
+.product-price { font-size: 1.1rem; font-weight: 600; color: #B12704; margin-bottom: 12px; }
+
+.card-actions { display: flex; gap: 8px; margin-top: auto; }
+
+.add-btn { 
+    flex: 2; padding: 10px; background: var(--gold); color: white;
+    border: none; border-radius: 4px; font-weight: 600; cursor: pointer;
+}
+
+.icon-btn { background: #f4f4f4; border: none; padding: 10px; border-radius: 4px; cursor: pointer; flex: 1; }
+
+/* =========================================
+   5. SIDEBAR & BAG
+   ========================================= */
+.sidebar { 
+    position: fixed; right: -100%; top: 0; width: 350px; 
+    height: 100%; background: var(--black); color: var(--white); 
+    z-index: 2001; transition: var(--transition); padding: 20px;
+}
+.sidebar.open { right: 0; }
+
+.qty-controls { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+.qty-btn { background: #333; color: white; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; }
+
+/* =========================================
+   6. DYNAMIC ORDER MODAL (Checkout Form)
+   ========================================= */
 .modal { 
     display: none; position: fixed; z-index: 3000; top: 0; left: 0; 
     width: 100%; height: 100%; background: rgba(0,0,0,0.85); 
@@ -31,21 +275,28 @@ body { font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
 .form-group { margin-bottom: 15px; }
 .form-group label { display: block; color: var(--gold); font-size: 0.8rem; margin-bottom: 5px; }
 .form-group input, .form-group textarea {
-    width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 5px;
+    width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 5px; outline: none;
 }
+.form-group input:focus { border-color: var(--gold); }
 
-/* --- Animations --- */
+/* =========================================
+   7. ANIMATIONS
+   ========================================= */
 @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes productFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bagSway { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
 
-.product-card {
-    transition: var(--transition);
-    animation: fadeIn 0.6s ease forwards;
-}
-.product-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-
-/* Responsive Adjustments */
+/* =========================================
+   8. RESPONSIVE MEDIA QUERIES
+   ========================================= */
 @media (max-width: 768px) {
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .hero-title { font-size: 2rem; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .sidebar { width: 100%; }
+    .cat-wrapper { justify-content: flex-start; }
+    #search-bar { width: 100px; }
+}
+
+@media (max-width: 480px) {
+    .product-grid { grid-template-columns: 1fr; }
 }
