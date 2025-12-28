@@ -1,6 +1,6 @@
 import { products } from './data.js';
 
-// Initialize cart from LocalStorage or empty array
+// 1. STATE MANAGEMENT
 let cart = JSON.parse(localStorage.getItem('bd-cart')) || [];
 
 /**
@@ -13,14 +13,12 @@ function init() {
 }
 
 /**
- * Render Product Grid with Staggered Animations & Custom Badges
- * @param {string} category - Category filter
- * @param {string} searchTerm - Search query filter
+ * Render Product Grid with Animations & Dynamic Badges
  */
 function renderProducts(category = 'All', searchTerm = '') {
     const list = document.getElementById('product-list');
     
-    // Multi-level filtering: Category + Search Term
+    // Filtering Logic
     const filtered = products.filter(p => {
         const matchesCategory = category === 'All' || p.category === category;
         const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -38,15 +36,12 @@ function renderProducts(category = 'All', searchTerm = '') {
         return;
     }
 
-    // Map through filtered products with animations
+    // Render Grid
     list.innerHTML = filtered.map((p, index) => {
-        // Logic for "On Request" items
         const isRequestOnly = p.on_request === true || p.price === 0;
         const priceDisplay = isRequestOnly ? "Price on Request" : `Rs. ${p.price}`;
         const btnText = isRequestOnly ? "INQUIRE" : "ADD TO BAG";
         const btnIcon = isRequestOnly ? "fa-envelope" : "fa-plus";
-        
-        // Ribbon Badge HTML for Custom/Request items
         const badgeHTML = isRequestOnly ? `<div class="request-badge">Custom Order</div>` : '';
 
         return `
@@ -75,11 +70,11 @@ function renderProducts(category = 'All', searchTerm = '') {
 }
 
 /**
- * Global Window Functions
+ * Global Helper Functions (Attached to Window for onclick attributes)
  */
-
 window.viewImage = (src, title) => {
     const modal = document.getElementById('image-modal');
+    if (!modal) return;
     const modalImg = document.getElementById('modal-img');
     const modalCaption = document.getElementById('modal-caption');
     modalImg.src = src;
@@ -121,7 +116,7 @@ window.changeQty = (id, delta) => {
 };
 
 /**
- * Persistence & UI Update Logic
+ * Persistence & UI Update
  */
 function saveAndUpdate() {
     localStorage.setItem('bd-cart', JSON.stringify(cart));
@@ -136,8 +131,8 @@ function updateUI() {
     const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
     const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
 
-    cartCount.innerText = totalQty;
-    cartTotal.innerText = `Rs. ${totalPrice}`;
+    if (cartCount) cartCount.innerText = totalQty;
+    if (cartTotal) cartTotal.innerText = `Rs. ${totalPrice}`;
 
     if (cart.length === 0) {
         itemsDiv.innerHTML = `
@@ -171,16 +166,25 @@ function updateUI() {
 }
 
 /**
- * Core Event Listeners
+ * Event Listeners
  */
 function setupEventListeners() {
+    // Sidebar Toggles
     document.getElementById('cart-toggle').onclick = () => document.getElementById('cart-sidebar').classList.add('open');
-    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
     
-    const modal = document.getElementById('image-modal');
-    document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
-    window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; };
-    
+    // Support for both "close-cart" and "close-cart-back" IDs used in your HTML
+    const closeBtn = document.getElementById('close-cart') || document.getElementById('close-cart-back');
+    if (closeBtn) closeBtn.onclick = () => document.getElementById('cart-sidebar').classList.remove('open');
+
+    // Image Modal Logic
+    const imageModal = document.getElementById('image-modal');
+    if (imageModal) {
+        const closeMod = document.querySelector('.close-modal');
+        if (closeMod) closeMod.onclick = () => imageModal.style.display = "none";
+        window.onclick = (e) => { if (e.target == imageModal) imageModal.style.display = "none"; };
+    }
+
+    // Clear Cart
     document.getElementById('clear-cart').onclick = () => {
         if (cart.length > 0 && confirm("Remove all items from your bag?")) {
             cart = [];
@@ -188,6 +192,7 @@ function setupEventListeners() {
         }
     };
 
+    // Category Filters
     document.querySelectorAll('.cat-item').forEach(btn => {
         btn.onclick = () => {
             document.querySelector('.cat-item.active').classList.remove('active');
@@ -196,32 +201,59 @@ function setupEventListeners() {
         };
     });
 
+    // Search Input
     document.getElementById('search-bar').addEventListener('input', (e) => {
         const activeCat = document.querySelector('.cat-item.active').dataset.cat;
         renderProducts(activeCat, e.target.value);
     });
 
-    document.getElementById('footer-feedback-btn').onclick = () => {
-        window.open('https://wa.me/918105750221?text=Hi, I have feedback regarding Bannada Daara:', '_blank');
-    };
-
+    // Checkout Logic (Opens the Order Modal)
     document.getElementById('checkout-btn').onclick = () => {
         if (cart.length === 0) return alert("Please add items to your bag first!");
-        
-        const cartList = cart.map(i => {
-            const isRequest = i.price === 0 || i.on_request === true;
-            const priceLabel = isRequest ? "[Custom Quote Needed]" : `Rs.${i.price * i.qty}`;
-            return `• ${i.name} [x${i.qty}] - ${priceLabel}`;
-        }).join('%0A');
-        
-        const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-        const totalText = total > 0 
-            ? `%0A%0A*Total Estimated: Rs.${total}*%0A(Excluding custom items)` 
-            : '%0A%0A*Requesting Price Quote for Order*';
-        
-        window.open(`https://wa.me/918105750221?text=Hello Bannada Daara! I am interested in these treasures:%0A%0A${cartList}${totalText}`, '_blank');
+        const orderModal = document.getElementById('order-modal');
+        if (orderModal) {
+            orderModal.style.display = 'flex';
+        } else {
+            // Fallback if modal doesn't exist: Direct WhatsApp
+            sendDirectWhatsApp();
+        }
     };
+
+    // Order Modal Close
+    const closeOrderBtn = document.querySelector('.close-order-modal');
+    if (closeOrderBtn) {
+        closeOrderBtn.onclick = () => document.getElementById('order-modal').style.display = 'none';
+    }
+
+    // Final WhatsApp Confirmation
+    const confirmBtn = document.getElementById('confirm-order-btn');
+    if (confirmBtn) {
+        confirmBtn.onclick = () => {
+            const name = document.getElementById('cust-name').value;
+            const addr = document.getElementById('cust-address').value;
+            if (!name || !addr) return alert("Please fill in your delivery details.");
+
+            const cartList = cart.map(i => {
+                const isRequest = i.price === 0 || i.on_request === true;
+                const priceLabel = isRequest ? "[Custom Quote]" : `Rs.${i.price * i.qty}`;
+                return `• ${i.name} [x${i.qty}] - ${priceLabel}`;
+            }).join('%0A');
+
+            const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+            const totalText = total > 0 ? `%0A%0A*Total: Rs.${total}*` : '%0A%0A*Quote Requested*';
+            
+            const msg = `*New Order - Bannada Daara*%0A%0A*Name:* ${name}%0A*Address:* ${addr}%0A%0A*Treasures:*%0A${cartList}${totalText}`;
+            window.open(`https://wa.me/918105750221?text=${msg}`, '_blank');
+            
+            document.getElementById('order-modal').style.display = 'none';
+        };
+    }
 }
 
-// Run Application
+// Fallback direct sender if modal isn't present
+function sendDirectWhatsApp() {
+    const cartList = cart.map(i => `• ${i.name} [x${i.qty}]`).join('%0A');
+    window.open(`https://wa.me/918105750221?text=Hi! I'm interested in:%0A%0A${cartList}`, '_blank');
+}
+
 init();

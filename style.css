@@ -5,6 +5,7 @@
     --gold: #c5a059;
     --black: #0a0a0a;
     --white: #ffffff;
+    --gray: #f4f4f4;
     --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -18,7 +19,8 @@ body {
     font-family: 'Montserrat', sans-serif; 
     background: var(--white); 
     overflow-x: hidden; 
-    scroll-behavior: smooth; 
+    scroll-behavior: smooth;
+    line-height: 1.6;
 }
 
 .container { 
@@ -28,14 +30,11 @@ body {
 }
 
 /* =========================================
-   2. HEADER, NAVIGATION & PREMIUM BUTTONS
+   2. HEADER & NAVIGATION
    ========================================= */
-.navbar, .footer { 
-    background: var(--black); 
-    color: var(--white); 
-}
-
 .navbar { 
+    background: var(--black); 
+    color: var(--white);
     padding: 12px 0; 
     position: sticky; 
     top: 0; 
@@ -49,9 +48,29 @@ body {
     justify-content: space-between;
 }
 
-.nav-logo { height: 25px; width: auto; margin-right: 10px; }
-.footer-logo { height: 22px; width: auto; margin-right: 10px; }
-.main-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--white); }
+.brand { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+}
+
+.dynamic-logo { 
+    height: 50px; 
+    width: auto; 
+    object-fit: contain; 
+}
+
+.main-title { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.6rem; 
+    color: var(--white); 
+}
+
+.nav-right { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+}
 
 /* --- ENHANCED SEARCH BAR --- */
 .search-container {
@@ -80,28 +99,7 @@ body {
     width: 150px;
 }
 
-/* --- THE SEARCH BUTTON --- */
-.search-btn {
-    background: var(--gold);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 34px;
-    height: 34px;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
-}
-
-.search-btn:hover {
-    transform: scale(1.1) rotate(15deg);
-    background: #d4af37;
-}
-
-/* --- THE MAIN BAG BUTTON (NAVBAR) --- */
+/* --- THE MAIN BAG BUTTON --- */
 .bag-btn {
     background: linear-gradient(135deg, #c5a059 0%, #a68544 100%);
     color: white;
@@ -109,7 +107,6 @@ body {
     padding: 8px 18px;
     border-radius: 50px;
     font-weight: 600;
-    letter-spacing: 1px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -123,18 +120,13 @@ body {
     box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
 }
 
-.bag-btn i {
-    font-size: 1.1rem;
-    animation: bagSway 3s infinite ease-in-out;
-}
-
 #cart-count {
     background: white;
     color: var(--black);
     padding: 2px 6px;
     border-radius: 10px;
-    font-size: 0.7rem;
-    margin-left: 5px;
+    font-size: 0.75rem;
+    font-weight: bold;
 }
 
 /* =========================================
@@ -143,7 +135,7 @@ body {
 .category-bar {
     padding: 30px 0 10px 0;
     position: sticky;
-    top: 60px;
+    top: 74px; /* Adjusted based on navbar height */
     background: white;
     z-index: 900;
 }
@@ -170,18 +162,9 @@ body {
     background: #fdfdfd;
     border-radius: 50px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
     font-size: 0.85rem;
     font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #555;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.cat-item:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-    transform: translateY(-2px) scale(1.05);
+    transition: var(--transition);
 }
 
 .cat-item.active {
@@ -192,102 +175,52 @@ body {
 }
 
 /* =========================================
-   4. HERO & ABOUT SECTIONS
-   ========================================= */
-.hero-section, .about-section {
-    background-image: url('images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    position: relative;
-    width: 100%;
-}
-
-.hero-section { min-height: 60vh; display: flex; align-items: center; }
-
-.hero-overlay, .about-overlay { 
-    background: rgba(0, 0, 0, 0.65); 
-    padding: 100px 0; 
-    text-align: center; 
-    color: var(--white); 
-    width: 100%;
-}
-
-.hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.5rem;
-    margin-bottom: 10px;
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    color: #f0f0f0;
-    margin-bottom: 30px;
-    font-weight: 300;
-}
-
-.about-section h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.8rem;
-    color: var(--gold);
-    margin-bottom: 20px;
-}
-
-.about-section p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    max-width: 800px;
-    margin: 0 auto;
-    color: #e0e0e0;
-}
-
-/* =========================================
-   5. PRODUCT GRID & CARDS
+   4. PRODUCT GRID & CARDS
    ========================================= */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
     padding: 40px 0;
 }
 
 .product-card {
-    border: 1px solid #eee; 
-    padding: 12px; 
-    display: flex; 
+    border: 1px solid #eee;
+    padding: 15px;
+    display: flex;
     flex-direction: column;
-    background: var(--white); 
-    transition: var(--transition); 
+    background: var(--white);
+    transition: var(--transition);
     height: 100%;
-    animation: productFadeIn 0.5s ease forwards;
     position: relative;
+    animation: productFadeIn 0.5s ease forwards;
 }
 
-.product-card:hover { 
-    border: 1px solid var(--gold); 
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+.product-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
-.img-container { 
-    width: 100%; 
-    aspect-ratio: 1/1; 
-    position: relative; 
-    overflow: hidden; 
-    background: #f9f9f9; 
-    cursor: pointer; 
+.img-container {
+    width: 100%;
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+    background: var(--gray);
+    cursor: pointer;
 }
 
-.img-container img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: transform 0.5s ease;
 }
 
 .product-card:hover .img-container img { transform: scale(1.08); }
 
-/* --- RIBBON / BADGE --- */
+/* --- RIBBON BADGE --- */
 .request-badge {
     position: absolute;
     top: 10px;
@@ -298,7 +231,6 @@ body {
     font-size: 0.65rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
     z-index: 10;
     box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
 }
@@ -312,82 +244,70 @@ body {
     border-top: 5px solid #8a6d35;
 }
 
-.product-name { 
-    font-size: 0.95rem; 
-    height: 2.8em; 
-    overflow: hidden; 
-    margin: 12px 0 5px 0; 
-    color: #333; 
+.product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 50px;
+    margin: 15px 0 5px 0;
+    color: #333;
 }
 
-.product-price { 
-    font-size: 1.1rem; 
-    font-weight: 600; 
-    color: #B12704; 
-    margin-bottom: 12px; 
+.product-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #B12704;
+    margin-bottom: 15px;
 }
 
 /* --- BUTTONS & ACTIONS --- */
 .card-actions { display: flex; gap: 8px; margin-top: auto; }
 
-.add-btn { 
-    flex: 2; 
-    padding: 10px; 
-    font-size: 0.85rem; 
+.add-btn {
+    flex: 2;
+    padding: 12px;
+    font-size: 0.85rem;
     background: var(--gold);
     color: white;
     border: none;
     border-radius: 4px;
     font-weight: 600;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    transition: var(--transition);
 }
 
-.add-btn::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 20%;
-    height: 200%;
-    background: rgba(255,255,255,0.2);
-    transform: rotate(30deg);
-    transition: 0.5s;
-}
+.add-btn:hover { background: #a68544; }
 
-.add-btn:hover::after { left: 120%; }
-
-.icon-btn { 
-    background: #f4f4f4; 
-    border: none; 
-    padding: 10px; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    flex: 1; 
+.icon-btn {
+    background: #f4f4f4;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: var(--transition);
 }
 
-.icon-btn:hover { background: #e8e8e8; }
-
 /* =========================================
-   6. SIDEBAR & BAG CONTROLS
+   5. SIDEBAR (BAG)
    ========================================= */
-.sidebar { 
-    position: fixed; 
-    right: -100%; 
-    top: 0; 
-    width: 350px; 
-    height: 100%; 
-    background: var(--black); 
-    color: var(--white); 
-    z-index: 2001; 
-    transition: var(--transition); 
-    padding: 20px;
+.sidebar {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 350px;
+    height: 100%;
+    background: var(--black);
+    color: var(--white);
+    z-index: 2001;
+    transition: 0.4s;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
 }
+
 .sidebar.open { right: 0; }
 
 .sidebar-header {
@@ -397,7 +317,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* --- EMPTY BAG BUTTON --- */
 .clear-btn {
     background: transparent;
     color: var(--gold);
@@ -405,88 +324,90 @@ body {
     padding: 5px 12px;
     border-radius: 4px;
     font-size: 0.75rem;
-    text-transform: uppercase;
-    font-weight: 600;
+    cursor: pointer;
     transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
 }
 
-.clear-btn:hover {
-    background: var(--gold);
-    color: white;
-    box-shadow: 0 0 12px rgba(197, 160, 89, 0.5);
-}
-
-.qty-controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 8px;
-}
-
-.qty-btn {
-    background: #333;
-    color: white;
-    border: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.qty-btn:hover { background: var(--gold); }
+.clear-btn:hover { background: var(--gold); color: white; }
 
 /* =========================================
-   7. MODALS & ANIMATIONS
+   6. MODALS & WHATSAPP BUTTON
    ========================================= */
-.modal { 
-    display: none; 
-    position: fixed; 
-    z-index: 3000; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background: rgba(0,0,0,0.9); 
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
 }
 
-.modal-content { max-width: 90%; max-height: 80%; margin: auto; padding-top: 60px; display: block; }
+.modal-form-content {
+    background: #121212;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--gold);
+    width: 90%;
+    max-width: 400px;
+    color: var(--white);
+}
 
-.close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; color: var(--gold); margin-bottom: 5px; font-size: 0.9rem; }
+.form-group input, .form-group textarea {
+    width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 8px;
+}
 
+.stylish-wa-btn {
+    background: #25D366;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.stylish-wa-btn:hover { background: #128C7E; transform: scale(1.02); }
+
+/* =========================================
+   7. FOOTER
+   ========================================= */
+.footer { 
+    background: var(--black); 
+    color: var(--white); 
+    text-align: center; 
+    padding: 40px 0; 
+    margin-top: 50px; 
+}
+
+.footer-logo { 
+    height: 40px; 
+    width: auto; 
+    filter: grayscale(1) invert(1); 
+    opacity: 0.6; 
+    margin-bottom: 10px; 
+}
+
+/* =========================================
+   8. ANIMATIONS & RESPONSIVE
+   ========================================= */
 @keyframes productFadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes bagSway {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-10deg); }
-    75% { transform: rotate(10deg); }
-}
-
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-animate { animation: fadeInUp 1s ease-out forwards; }
-
-/* =========================================
-   8. RESPONSIVE MEDIA QUERIES
-   ========================================= */
 @media (max-width: 768px) {
-    .hero-section { background-attachment: scroll; min-height: 50vh; }
-    .hero-title { font-size: 2.2rem; }
-    .hero-overlay { padding: 60px 0; }
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .hide-mobile { display: none; }
+    .main-title { display: none; }
+    .dynamic-logo { height: 40px; }
     .sidebar { width: 100%; }
-    .cat-wrapper { justify-content: flex-start; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
     #search-bar { width: 100px; }
 }
 
