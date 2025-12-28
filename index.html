@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bannada Daara | Handcrafted Treasures</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -13,7 +14,7 @@
     <header class="navbar">
         <div class="container nav-content">
             <div class="brand">
-                <img src="images/logo.png" alt="Bannada Daara Logo" class="dynamic-logo">
+                <img src="images/logo.png" alt="Bannada Daara Logo" class="dynamic-logo nav-logo">
                 <h1 class="main-title">Bannada Daara</h1>
             </div>
             
@@ -76,8 +77,8 @@
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
             <button id="close-cart-back" class="back-btn"><i class="fas fa-arrow-left"></i> BACK</button>
-            <h3>Your Selection</h3>
-            <button id="clear-cart" class="clear-btn"><i class="fas fa-trash"></i> EMPTY</button>
+            <h3><i class="fas fa-shopping-bag" style="color:var(--gold)"></i> Your Selection</h3>
+            <button id="clear-cart" class="clear-btn"><i class="fas fa-trash-alt"></i> EMPTY</button>
         </div>
 
         <div id="cart-items" class="cart-items-container">
@@ -85,7 +86,7 @@
 
         <div class="sidebar-footer">
             <div class="total-row">
-                <span>Total</span>
+                <span>Subtotal</span>
                 <span id="cart-total">Rs. 0</span>
             </div>
             <button id="checkout-btn" class="stylish-wa-btn">
@@ -99,11 +100,11 @@
         <div class="modal-form-content">
             <h3>Delivery Details</h3>
             <div class="form-group">
-                <label>Full Name</label>
+                <label for="cust-name">Full Name</label>
                 <input type="text" id="cust-name" placeholder="Enter your name">
             </div>
             <div class="form-group">
-                <label>Delivery Address</label>
+                <label for="cust-address">Delivery Address</label>
                 <textarea id="cust-address" rows="3" placeholder="Apartment, Street, Landmark, Pincode"></textarea>
             </div>
             <button id="confirm-order-btn" class="stylish-wa-btn">
@@ -115,26 +116,26 @@
 
     <div id="image-modal" class="modal">
         <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modal-img" alt="Enlarged view">
+        <img class="modal-content" id="modal-img" alt="Enlarged product view">
         <div id="modal-caption"></div>
     </div>
 
     <footer class="footer">
-        <div class="container">
+        <div class="container" style="text-align: center;">
             <div class="footer-brand" style="margin-bottom: 20px;">
                 <img src="images/logo.png" alt="Logo" class="dynamic-logo footer-logo">
-                <div class="footer-title" style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold);">Bannada Daara</div>
+                <div class="footer-title">Bannada Daara</div>
             </div>
             
-            <div class="footer-actions" style="display: flex; justify-content: center; gap: 30px; align-items: center; margin-bottom: 20px;">
-                <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link" style="color: white; text-decoration: none;">
+            <div class="footer-actions">
+                <a href="https://instagram.com/bannadadaara" target="_blank" class="insta-link">
                     <i class="fab fa-instagram"></i> @bannadadaara
                 </a>
-                <button id="footer-feedback-btn" class="clear-btn" style="padding: 8px 15px;">
+                <button id="footer-feedback-btn" class="feedback-btn">
                     <i class="fas fa-comment"></i> FEEDBACK
                 </button>
             </div>
-            <p class="copyright" style="opacity: 0.6; font-size: 0.8rem;">
+            <p class="copyright">
                 &copy; 2025 Crafted with Heart in Dakshina Kannada.
             </p>
         </div>
