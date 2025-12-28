@@ -149,16 +149,17 @@ body {
 /* =========================================
    3. HERO & ABOUT SECTIONS
    ========================================= */
-.hero-section, .about-section {
-    background-image: url('images/hero-bg.jpg'); /* Ensure this file exists */
+.hero-section {
+    background-image: url('images/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     position: relative;
     width: 100%;
+    min-height: 65vh; 
+    display: flex; 
+    align-items: center;
 }
-
-.hero-section { min-height: 65vh; display: flex; align-items: center; }
 
 .hero-overlay, .about-overlay { 
     background: rgba(0, 0, 0, 0.65); 
@@ -275,7 +276,6 @@ body {
 
 .product-card:hover .img-container img { transform: scale(1.08); }
 
-/* --- RIBBON BADGE --- */
 .request-badge {
     position: absolute;
     top: 10px;
@@ -313,7 +313,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* --- ACTION BUTTONS --- */
 .card-actions { display: flex; gap: 8px; margin-top: auto; }
 
 .add-btn {
@@ -332,6 +331,7 @@ body {
 
 .add-btn:hover { background: var(--gold-dark); }
 
+/* Shine effect on add button */
 .add-btn::after {
     content: '';
     position: absolute;
@@ -396,6 +396,7 @@ body {
     border-radius: 4px;
     font-size: 0.75rem;
     cursor: pointer;
+    transition: var(--transition);
 }
 
 .clear-btn:hover { background: var(--gold); color: white; }
@@ -454,12 +455,11 @@ body {
 
 .stylish-wa-btn:hover { background: #128C7E; transform: translateY(-2px); }
 
-/* --- IMAGE MODAL --- */
 .modal-content { max-width: 90%; max-height: 80%; object-fit: contain; }
 .close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
 
 /* =========================================
-   8. FOOTER
+   8. FOOTER & FEEDBACK
    ========================================= */
 .footer { 
     background: var(--black); 
@@ -467,6 +467,7 @@ body {
     padding: 50px 0; 
     margin-top: 50px; 
     border-top: 1px solid #222;
+    text-align: center;
 }
 
 .footer-logo { 
@@ -474,6 +475,68 @@ body {
     filter: brightness(0) invert(1); 
     opacity: 0.8; 
     margin-bottom: 15px; 
+}
+
+/* Footer Spacing */
+.footer-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* Large space between ID and Button */
+    margin: 25px 0;
+}
+
+.insta-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+    font-weight: 300;
+}
+
+.insta-link:hover {
+    color: var(--gold);
+}
+
+/* Stylish Animated Feedback Button */
+.feedback-btn.stylish-animated {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 10px 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.feedback-btn.stylish-animated:hover {
+    background-color: var(--gold);
+    color: var(--black);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(197, 160, 89, 0.25);
+}
+
+.feedback-btn.stylish-animated:hover i {
+    transform: rotate(15deg);
+}
+
+.feedback-btn.stylish-animated:active {
+    transform: translateY(-1px);
+}
+
+.copyright {
+    opacity: 0.5;
+    font-size: 0.75rem;
+    margin-top: 10px;
 }
 
 /* =========================================
@@ -497,6 +560,11 @@ body {
     #search-bar { width: 100px; }
     .hero-section { min-height: 50vh; background-attachment: scroll; }
     .hero-title { font-size: 2.2rem; }
+    
+    .footer-actions {
+        flex-direction: column;
+        gap: 20px;
+    }
 }
 
 @media (max-width: 480px) {
