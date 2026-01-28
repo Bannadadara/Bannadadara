@@ -131,7 +131,7 @@ function updateDashboard() {
             <td>₹${p.price}</td>
             <td>
                 <button class="delete-btn" onclick="deleteProduct(${p.id}, '${p.type}')">
-                    ${isCustom ? 'Delete' : 'Hide'}
+                    Delete
                 </button>
             </td>
         `;
@@ -152,6 +152,8 @@ function setupForm() {
 
         const name = document.getElementById('p-name').value;
         const price = parseFloat(document.getElementById('p-price').value);
+        const length = document.getElementById('p-length').value;
+        const width = document.getElementById('p-width').value;
         const category = document.getElementById('p-category').value;
         const desc = document.getElementById('p-desc').value;
 
@@ -176,6 +178,7 @@ function setupForm() {
             category,
             img: imgFront, // Main image
             images: imageList,
+            dimensions: (length || width) ? { length: length || '--', width: width || '--' } : null,
             description: desc || "No description provided.",
             isCustom: true
         };
@@ -356,8 +359,7 @@ window.clearImageUpload = function () {
 
 // 4. Global Delete Function
 window.deleteProduct = (id, type) => {
-    const action = type === 'custom' ? 'permanently DELETE' : 'HIDE';
-    if (!confirm(`Are you sure you want to ${action} this product from the shop?`)) return;
+    if (!confirm(`Are you sure you want to DELETE this product from the shop?`)) return;
 
     if (type === 'custom') {
         // Remove from Custom Array

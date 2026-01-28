@@ -75,9 +75,7 @@ window.openProductModal = (id) => {
 
     // Gallery Logic
     const gallery = document.getElementById('p-gallery');
-    const imagesGrid = document.getElementById('p-images-grid');
     gallery.innerHTML = ''; // Clear previous
-    if (imagesGrid) imagesGrid.innerHTML = '';
 
     if (p.images && p.images.length > 0) {
         p.images.forEach((imgSrc, index) => {
@@ -93,21 +91,12 @@ window.openProductModal = (id) => {
                 thumb.classList.add('active');
             };
             gallery.appendChild(thumb);
-
-            // Grid items for Images tab
-            if (imagesGrid) {
-                const gridImg = document.createElement('img');
-                gridImg.src = imgSrc;
-                gridImg.style.width = '100%';
-                gridImg.style.height = '150px';
-                gridImg.style.objectFit = 'cover';
-                gridImg.style.borderRadius = '8px';
-                gridImg.style.cursor = 'pointer';
-                gridImg.onclick = () => window.viewImage(imgSrc, p.name);
-                imagesGrid.appendChild(gridImg);
-            }
         });
     }
+
+    // Main Image Click -> View Image
+    document.getElementById('p-main-img').onclick = () => window.viewImage(p.img, p.name);
+    document.getElementById('p-main-img').style.cursor = 'zoom-in';
 
     // Initialize or re-attach zoom effect logic
     setupZoomEffect();

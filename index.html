@@ -166,8 +166,6 @@
                     style="display:flex; gap:20px; border-bottom:1px solid #333; margin-bottom:15px; padding-bottom:5px;">
                     <span class="p-tab active" onclick="switchTab('desc')" id="tab-desc"
                         style="cursor:pointer; color:var(--gold); font-weight:600; font-size:0.9rem;">Description</span>
-                    <span class="p-tab" onclick="switchTab('images')" id="tab-images"
-                        style="cursor:pointer; color:#888; font-weight:600; font-size:0.9rem;">Images</span>
                     <span class="p-tab" onclick="switchTab('reviews')" id="tab-reviews"
                         style="cursor:pointer; color:#888; font-weight:600; font-size:0.9rem;">Reviews (<span
                             id="review-count">0</span>)</span>
@@ -179,12 +177,6 @@
                     </div>
                 </div>
 
-                <div id="content-images" class="tab-content"
-                    style="display:none; color:#999; flex:1; overflow-y:auto; margin-bottom:20px;">
-                    <div id="p-images-grid" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;">
-                        <!-- All product images injected here -->
-                    </div>
-                </div>
 
                 <div id="content-reviews" class="tab-content"
                     style="display:none; flex:1; overflow-y:auto; margin-bottom:20px;">
@@ -218,7 +210,7 @@
                 <div
                     style="margin-top:auto; padding-top:15px; border-top:1px solid #333; display:flex; align-items:center; justify-content:space-between;">
                     <div id="p-modal-price" style="font-size:1.2rem; color:var(--primary); font-weight:700;">₹0</div>
-                    <button id="p-add-btn" class="add-btn" style="width:auto; padding:10px 25px; font-size:0.85rem;">
+                    <button id="p-add-btn" class="add-btn">
                         ADD TO BAG
                     </button>
                 </div>
