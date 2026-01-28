@@ -105,10 +105,12 @@ const initAuth = () => {
     if (regForm) {
         regForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = document.getElementById('reg-name').value;
             const email = document.getElementById('reg-email').value;
             const pass = document.getElementById('reg-pass').value;
             const btn = document.getElementById('reg-submit');
+
+            // Use email username as default name if field is removed
+            const name = email.split('@')[0];
 
             btn.innerText = 'Creating Account...';
 
@@ -118,7 +120,7 @@ const initAuth = () => {
                     window.location.href = 'index.html';
                 } else {
                     alert(res.message);
-                    btn.innerText = 'Register';
+                    btn.innerText = 'CREATE MY ACCOUNT';
                 }
             }, 800);
         });
