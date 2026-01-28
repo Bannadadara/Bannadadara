@@ -128,7 +128,7 @@ function updateDashboard() {
                 ${p.name} <br> ${badge}
             </td>
             <td>${p.category}</td>
-            <td>Rs. ${p.price}</td>
+            <td>₹${p.price}</td>
             <td>
                 <button class="delete-btn" onclick="deleteProduct(${p.id}, '${p.type}')">
                     ${isCustom ? 'Delete' : 'Hide'}
