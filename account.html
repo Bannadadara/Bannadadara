@@ -140,11 +140,11 @@
                 </div>
             </div>
 
-            <div class="account-card">
-                <div class="card-icon"><i class="fas fa-lock"></i></div>
+            <div class="account-card" onclick="showSection('profile')">
+                <div class="card-icon"><i class="fas fa-user-circle"></i></div>
                 <div class="card-content">
-                    <h3>Login & security</h3>
-                    <p>Edit login, name, and mobile number</p>
+                    <h3>Your Profile</h3>
+                    <p id="user-email-display">Loading email...</p>
                 </div>
             </div>
 
@@ -153,6 +153,26 @@
                 <div class="card-content">
                     <h3>Your Addresses</h3>
                     <p>Edit addresses for orders</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile-section" class="orders-section"
+            style="display:none; margin-bottom: 40px; background: white; padding: 30px; border-radius: 12px; border: 1px solid var(--gray-border);">
+            <h2 style="margin-bottom:20px; color: var(--primary);">Profile Information</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <span style="font-weight: 600; width: 120px; color: #555;">Full Name:</span>
+                    <span id="prof-name" style="color: #333;">-</span>
+                </div>
+                <div style="display: flex; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <span style="font-weight: 600; width: 120px; color: #555;">Email ID:</span>
+                    <span id="prof-email" style="color: #333;">-</span>
+                </div>
+                <div style="display: flex; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <span style="font-weight: 600; width: 120px; color: #555;">Joined:</span>
+                    <span id="prof-joined" style="color: #333;">-</span>
                 </div>
             </div>
         </div>
@@ -175,6 +195,13 @@
             window.location.href = 'login.html';
         } else {
             document.getElementById('user-greeting').innerText = `Hi, ${user.name}`;
+            document.getElementById('user-email-display').innerText = user.email;
+
+            // Populate Profile Section
+            document.getElementById('prof-name').innerText = user.name;
+            document.getElementById('prof-email').innerText = user.email;
+            document.getElementById('prof-joined').innerText = new Date(user.joined).toLocaleDateString();
+
             renderOrders();
         }
 
@@ -228,9 +255,17 @@
         }
 
         function showSection(name) {
-            // For now only orders work, simple scroll
+            const ordersSec = document.getElementById('orders-section');
+            const profileSec = document.getElementById('profile-section');
+
             if (name === 'orders') {
-                document.getElementById('orders-section').scrollIntoView({ behavior: 'smooth' });
+                ordersSec.style.display = 'block';
+                profileSec.style.display = 'none';
+                ordersSec.scrollIntoView({ behavior: 'smooth' });
+            } else if (name === 'profile') {
+                ordersSec.style.display = 'none';
+                profileSec.style.display = 'block';
+                profileSec.scrollIntoView({ behavior: 'smooth' });
             }
         }
     </script>
