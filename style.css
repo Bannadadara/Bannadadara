@@ -441,18 +441,24 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+    /* Reduced gap */
+    padding: 6px 8px;
+    /* Reduced padding for fit */
 }
 
 .card-actions .icon-btn {
     flex: 0 0 auto;
-    width: 40px;
-    /* Fixed width for the share button */
+    width: 36px;
+    /* Reduced share button width */
+    padding: 0;
+    /* Remove padding to center icon better in smaller box */
 }
 
 .add-btn {
     width: auto;
-    padding: 6px 14px;
+    padding: 6px 10px;
+    /* Reduced base padding */
     background: linear-gradient(135deg, var(--gold) 0%, #FFA500 100%);
     color: var(--text-btn);
     border: none;
